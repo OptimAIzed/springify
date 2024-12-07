@@ -1,0 +1,165 @@
+/* Base Styling */
+:root {
+  --primary-color: #6db33f;
+  /* Spring green theme */
+  --secondary-color: #333;
+  /* Dark text color */
+  --background-color: #f8f8f8;
+  /* Light background */
+  --text-color: #555;
+  /* Subtle text color */
+  --border-color: #ddd;
+  /* Light border */
+  --link-color: #6db33f;
+  --font-family: 'Roboto', Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Layout */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 30px 0;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.header p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Buttons */
+button,
+a.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 15px;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+a.button:hover {
+  background-color: #5a992f;
+  /* Darker green */
+}
+
+/* Forms */
+form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px rgba(109, 179, 63, 0.5);
+}
+
+/* Links */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #444;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: white;
+}
+
+.footer a:hover {
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  button,
+  a.button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+
+  input,
+  select {
+    font-size: 0.9rem;
+  }
+}
