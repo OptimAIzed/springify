@@ -1,4 +1,39 @@
-.container {
-    /* Example */
-    color: red;
-}
+.card {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .time {
+    font-size: 0.9rem;
+    color: #a9a9a9;
+  }
+  
+  
+  
+  .body {
+    margin-top: 10px;
+  }
+  
+  .title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .dependencies {
+    font-size: 0.9rem;
+    color: #cccccc;
+  }
+  

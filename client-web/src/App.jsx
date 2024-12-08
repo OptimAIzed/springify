@@ -3,6 +3,7 @@ import styles from './App.module.css';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
+import HistoryPage from './Pages/HistoryPage/HistoryPage';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         left
       </div>
       <div className={styles.center}>
-        <HomePage />
+        {/*<HomePage />*/}
+        <HistoryPage />
       </div >
       <div className={styles.right}>
         right
