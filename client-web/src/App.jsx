@@ -3,7 +3,7 @@ import styles from './App.module.css';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
-
+import Loading from "./Components/Loading/Loading";
 function App() {
   return (
     <div className={styles.container}>
@@ -11,7 +11,8 @@ function App() {
         left
       </div>
       <div className={styles.center}>
-        <HomePage />
+        {/*<HomePage />*/}
+        <Loading/>
       </div >
       <div className={styles.right}>
         right
