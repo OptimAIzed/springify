@@ -3,20 +3,15 @@ import styles from './App.module.css';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
+import DependencyPage from './Pages/DependencyPage/DependencyPage';
 
 function App() {
   return (
-    <div className={styles.container}>
-      <div className={styles.left}>
-        left
-      </div>
+      
       <div className={styles.center}>
-        <HomePage />
+        <DependencyPage />
       </div >
-      <div className={styles.right}>
-        right
-      </div >
-    </div>
+  
   );
 }
 

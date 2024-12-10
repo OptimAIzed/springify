@@ -1,4 +1,13 @@
 .container {
-    /* Example */
-    color: red;
-}
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    min-height: 100vh; 
+  }
+  
+  .title {
+    font-size: 2em;
+    text-align: center;
+    color: #333;
+  }
+  

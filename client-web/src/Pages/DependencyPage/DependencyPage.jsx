@@ -1,13 +1,13 @@
-import styles from "./DependencyPage.module.css";
-
-//components
+import React from "react";
+import Dependencies from "../../Components/Dependencies/Dependencies";
+import styles from "./DependencyPage.module.css"; 
 
 function DependencyPage() {
   return (
     <div className={styles.container}>
-      Dependency Page
+      <Dependencies />
     </div>
-  )
+  );
 }
 
-export default DependencyPage
+export default DependencyPage;
