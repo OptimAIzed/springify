@@ -1,4 +1,50 @@
 .container {
-    /* Example */
-    color: red;
+  margin: 20px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of items */
+  gap: 20px; /* Space between containers */
+  justify-content: space-between; /* Distribute space evenly */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap as necessary */
+  gap: 20px; /* Space between groups */
+  width: 100%; /* Ensure the row takes full width */
+}
+
+.row > div h4 {
+  margin-bottom: 15px; /* Add space between the label and the options */
+}
+
+.row > div {
+  flex: 1 1 calc(50% - 20px); /* Split into two columns of equal width */
+  min-width: 200px; /* Ensure a minimum width to prevent excessive shrinking */
+  max-width: 300px; /* Optional: Limit the maximum width for larger screens */
+  box-sizing: border-box; /* Include padding and border in dimensions */
+}
+
+
+.radioGroup {
+  display: flex;
+  flex-direction: row; /* Align radio buttons in a row */
+  flex-wrap: wrap; /* Allow buttons to wrap within the container */
+  gap: 15px; /* Space between radio buttons */
+}
+
+.radioOption {
+  display: flex;
+  align-items: center; /* Align radio button and text horizontally */
+  gap: 8px; /* Space between the radio button and its label text */
+}
+
+.radioOption input[type="radio"] {
+  accent-color: #007bff; /* Customize the color of the radio button */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.radioOption span {
+  flex-shrink: 0; /* Prevent span from shrinking */
+  white-space: nowrap; /* Ensure span text does not wrap */
 }

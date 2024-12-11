@@ -1,4 +1,88 @@
 .container {
-    /* Example */
-    color: red;
+  margin: 20px;
+  padding: 0;
 }
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.submitButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+.radioGroup {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Allows wrapping if there's not enough space */
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center; /* Align radio button and text vertically */
+  gap: 8px; /* Space between radio button and text */
+}
+
+.radioGroup input[type="radio"] {
+  accent-color: #007bff; /* Optional: Customize color */
+  margin: 0; /* Remove any default margins */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.radioOption span {
+  flex-shrink: 0; /* Prevent span from shrinking */
+  white-space: nowrap; /* Ensure span text does not wrap */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between form elements */
+}
+
+.formGroup {
+  display: grid;
+  grid-template-columns: 150px auto; /* Fixed width for label, flexible width for input */
+  align-items: center; /* Align label and input vertically */
+  gap: 10px; /* Space between label and input */
+}
+
+label {
+  text-align: right; /* Align label text to the right for a clean look */
+  margin: 0;
+}
+
+.input,
+.textarea {
+  width: 100%; /* Ensures the input stretches fully in its grid cell */
+  padding: 8px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-bottom: 2px solid #007bff;
+}
+
+.textarea {
+  resize: none;
+}
+
+
+
+
