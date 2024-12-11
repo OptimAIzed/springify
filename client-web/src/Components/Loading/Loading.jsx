@@ -16,14 +16,10 @@ function Loading() {
     <div className={styles.overlay}>
       <div className={styles.container}>
         <div className={styles.header}>
-          {/* Icône de fermeture */}
-          <button className={styles.closeButton} onClick={closeLoadingPage}>
-            <i className="bi bi-x-circle"></i> {/* Icône de fermeture */}
-          </button>
         </div>
         <div className={styles.content}>
-          <h2>Loading...</h2>
           <div className={styles.spinner}></div>
+          <h2>Loading...</h2>
         </div>
       </div>
     </div>
