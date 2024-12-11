@@ -1,7 +1,8 @@
 /* Base styling */
 :root {
   --primary-text-color: #6db33f;
-  --border-color: #4a5053;
+  --border-color: #e0e8e8;
+  --secondary-background: #ecf2f2;
 }
 
 * {

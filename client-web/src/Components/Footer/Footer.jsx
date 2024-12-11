@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div className={styles.container}>
       <button className={styles.button} onClick={() => alert("Button Clicked!")}>
-        Generate
+        GENERATE
       </button>
     </div>
   )

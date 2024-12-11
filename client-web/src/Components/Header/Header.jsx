@@ -1,9 +1,12 @@
 import styles from "./Header.module.css";
 
+//Images
+import Logo from '../../assets/images/logo.png';
+
 function Header() {
   return (
     <div className={styles.container}>
-      <img src="logopath/logo.png" alt="Logo" className={styles.logo} />
+      <img className={styles.logo} src={Logo} alt="Logo" />
     </div>
   )
 }

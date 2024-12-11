@@ -5,11 +5,20 @@
 
 .left,
 .right {
-    width: 150px; 
+    width: 12%;
     padding: 20px 0;
 }
 
 .center {
     flex: 1;
     border: 1px solid var(--border-color);
+}
+
+@media screen and (max-width: 1675px) {
+
+    .left,
+    .right {
+        width: 75px;
+        padding: 20px 0;
+    }
 }
