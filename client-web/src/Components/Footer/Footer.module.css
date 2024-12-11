@@ -1,13 +1,13 @@
 .container {
-  background-color: var(--secondary-background);
   display: flex;
   align-items: center;
-  /* Vertically center the button */
   justify-content: center;
-  /* Horizontally center the button */
-  padding: 10px;
+  height: 90px;
+  width: calc(100% - 20%);
+  background-color: var(--secondary-background);
+
+  position: fixed;
   bottom: 0;
-  width: 100%;
 }
 
 .button {
@@ -25,4 +25,10 @@
 .button:hover {
   color: #fff;
   background-color: #000;
+}
+
+@media screen and (max-width: 1675px) {
+  .container {
+    width: calc(100% - 152px);
+  }
 }

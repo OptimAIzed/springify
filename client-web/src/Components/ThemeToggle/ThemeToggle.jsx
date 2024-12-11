@@ -1,11 +1,9 @@
 import { useState } from "react";
 import styles from "./ThemeToggle.module.css";
 
-function ThemeToggle() {
-  const [theme, setTheme] = useState("light");
-
+function ThemeToggle({ theme, toggle }) {
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    toggle((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
     document.documentElement.setAttribute("data-theme", theme === "light" ? "dark" : "light");
   };
 

@@ -5,8 +5,16 @@
 
 .left,
 .right {
-    width: 12%;
+    width: 10%;
     padding: 20px 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    position: fixed;
+    top: 0;
 }
 
 .center {
@@ -14,11 +22,16 @@
     border: 1px solid var(--border-color);
 }
 
+.burger {
+    width: 32px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
 @media screen and (max-width: 1675px) {
 
     .left,
     .right {
         width: 75px;
-        padding: 20px 0;
     }
 }

@@ -1,8 +1,9 @@
 .content {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  flex: 1;
+  margin-bottom: 70px;
 }
 
 .leftColumn {
@@ -10,8 +11,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-right: 1px solid #ccc; /* Fine vertical line */
-  padding-right: 20px; /* Adjust padding to create space around the line */
+  border-right: 1px solid #ccc;
+  /* Fine vertical line */
+  padding-right: 20px;
+  /* Adjust padding to create space around the line */
 }
 
 .rightColumn {

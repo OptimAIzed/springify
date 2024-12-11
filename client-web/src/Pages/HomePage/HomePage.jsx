@@ -7,10 +7,10 @@ import ProjectForm from "../../Components/ProjectForm/ProjectForm";
 
 //components
 
-function HomePage() {
+function HomePage({ theme }) {
   return (
     <div className={styles.container}>
-      <Header />
+      <Header theme={theme} />
       <div className={styles.content}>
         <div className={styles.leftColumn}>
           <RadioForm />
@@ -20,7 +20,7 @@ function HomePage() {
           <PhotoDrop />
         </div>
       </div>
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 }
