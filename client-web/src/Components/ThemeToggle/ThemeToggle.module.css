@@ -1,4 +1,40 @@
-.container {
-    /* Example */
-    color: red;
-}
+:root {
+    --background-color-light: #ffffff;
+    --text-color-light: #000000;
+  
+    --background-color-dark: #333333;
+    --text-color-dark: #ffffff;
+  }
+  
+  [data-theme="light"] {
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+  }
+  
+  [data-theme="dark"] {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .toggleButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .toggleButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+  }
+  

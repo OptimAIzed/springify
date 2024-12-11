@@ -3,9 +3,9 @@ import styles from "./Header.module.css";
 function Header() {
   return (
     <div className={styles.container}>
-      Header Component
+      <img src="logopath/logo.png" alt="Logo" className={styles.logo} />
     </div>
   )
 }
 
-export default Header
+export default Header;

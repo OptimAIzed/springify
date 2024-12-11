@@ -1,4 +1,12 @@
 .container {
-    /* Example */
-    color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.5%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+
+.logo {
+  height: 50%; 
 }

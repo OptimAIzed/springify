@@ -1,5 +1,6 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import styles from './App.module.css';
+import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
@@ -12,10 +13,10 @@ function App() {
       </div>
       <div className={styles.center}>
         <HomePage />
-      </div >
+      </div>
       <div className={styles.right}>
-        right
-      </div >
+      <ThemeToggle />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,25 @@
 .container {
-    /* Example */
-    color: red;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+  }
+  
+  .input {
+    margin-top: 10px;
+  }
+  
+  .preview {
+    margin-top: 20px;
+  }
+  
+  .image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  

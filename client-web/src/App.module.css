@@ -1,12 +1,11 @@
 .container {
     display: flex;
     justify-content: space-between;
-
 }
 
 .left,
 .right {
-    width: 75px;
+    width: 150px; 
     padding: 20px 0;
 }
 
