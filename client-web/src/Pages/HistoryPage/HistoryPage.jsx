@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./HistoryPage.module.css";
 import HistoryCard from "../../Components/HistoryCard/HistoryCard";
 
 function HistoryPage() {
+  // Créer un état pour gérer la visibilité de la fenêtre d'historique
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => {
+    // Ferme la fenêtre en mettant à jour l'état
+    setIsOpen(false);
+  };
+
+  if (!isOpen) return null; // Si la fenêtre est fermée, ne rien afficher
+
   return (
     <div className={styles.overlay}>
       <div className={styles.container}>
@@ -33,7 +43,12 @@ function HistoryPage() {
             />
           </div>
         </div>
-       
+        
+        <div className={styles.closeButtonContainer}>
+          <button className={styles.closeButton} onClick={handleClose}>
+            CLOSE ESC
+          </button>
+        </div>
       </div>
     </div>
   );
