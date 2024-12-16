@@ -1,4 +1,17 @@
 .container {
-    /* Example */
-    color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 120px;
+}
+
+.logo {
+  width: 312px;
+  margin: 0 30px;
+}
+
+.line {
+  border-top: 1px solid var(--border-color);
+  width: calc(100% - 70px);
+  margin: 0 auto;
 }
