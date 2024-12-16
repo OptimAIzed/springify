@@ -1,13 +1,28 @@
 import styles from "./HomePage.module.css";
+import Header from "../../Components/Header/Header";
+import Footer from "../../Components/Footer/Footer";
+import RadioForm from "../../Components/RadioForm/RadioForm";
+import PhotoDrop from "../../Components/PhotoDrop/PhotoDrop";
+import ProjectForm from "../../Components/ProjectForm/ProjectForm";
 
 //components
 
-function HomePage() {
+function HomePage({ theme }) {
   return (
     <div className={styles.container}>
-      Home Page
+      <Header theme={theme} />
+      <div className={styles.content}>
+        <div className={styles.leftColumn}>
+          <RadioForm />
+          <ProjectForm />
+        </div>
+        <div className={styles.rightColumn}>
+          <PhotoDrop />
+        </div>
+      </div>
+      <Footer theme={theme} />
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;
