@@ -4,6 +4,7 @@ import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
+import Loading from "./Components/Loading/Loading";
 
 //Images
 import HamburgerDark from "./assets/images/hamburger.png";
