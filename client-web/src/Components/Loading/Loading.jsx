@@ -11,7 +11,7 @@ function Loading() {
         </div>
         <div className={styles.content}>
           <div className={styles.spinner}></div>
-          <h2>Loading...</h2>
+          <h2 className={styles.loadingText}>Loading<span className={styles.dots}></span></h2>
         </div>
       </div>
     </div>
