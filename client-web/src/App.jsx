@@ -22,7 +22,8 @@ function App() {
         </div>
       </div>
       <div className={styles.center}>
-        <HomePage theme={theme} />
+       
+        <HistoryPage theme={theme} />
       </div>
       <div className={styles.right}>
         <div className={styles.content}>
