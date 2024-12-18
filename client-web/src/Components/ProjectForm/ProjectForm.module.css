@@ -10,7 +10,7 @@ h2 {
 }
 
 .submitButton {
-  background-color: #007bff;
+  background-color: var(--primary-text-color);
   color: white;
   border: none;
   padding: 10px;
@@ -20,69 +20,69 @@ h2 {
 }
 
 .submitButton:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-text-color);
 }
+
 .radioGroup {
   display: flex;
   gap: 15px;
-  flex-wrap: wrap; /* Allows wrapping if there's not enough space */
+  flex-wrap: wrap;
 }
 
 .radioGroup label {
   display: flex;
-  align-items: center; /* Align radio button and text vertically */
-  gap: 8px; /* Space between radio button and text */
+  align-items: center;
+  gap: 8px;
 }
 
 .radioGroup input[type="radio"] {
-  accent-color: #007bff; /* Optional: Customize color */
-  margin: 0; /* Remove any default margins */
-  cursor: pointer; /* Change cursor to pointer */
+  margin: 0;
+  cursor: pointer;
+}
+
+.radioGroup input[type="radio"]:checked {
+  accent-color: var(--primary-text-color);
 }
 
 .radioOption span {
-  flex-shrink: 0; /* Prevent span from shrinking */
-  white-space: nowrap; /* Ensure span text does not wrap */
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Spacing between form elements */
+  gap: 15px;
 }
 
 .formGroup {
   display: grid;
-  grid-template-columns: 150px auto; /* Fixed width for label, flexible width for input */
-  align-items: center; /* Align label and input vertically */
-  gap: 10px; /* Space between label and input */
+  grid-template-columns: 150px auto;
+  align-items: center;
+  gap: 10px;
 }
 
 label {
-  text-align: right; /* Align label text to the right for a clean look */
+  text-align: right;
   margin: 0;
 }
 
 .input,
 .textarea {
-  width: 100%; /* Ensures the input stretches fully in its grid cell */
+  width: 100%;
   padding: 8px;
   font-size: 1rem;
   border: none;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 3px solid var(--input-border);
   outline: none;
   transition: border-color 0.3s ease;
 }
 
 .input:focus,
 .textarea:focus {
-  border-bottom: 2px solid #007bff;
+  border-bottom: 3px solid var(--primary-text-color);
 }
 
 .textarea {
   resize: none;
 }
-
-
-
-
