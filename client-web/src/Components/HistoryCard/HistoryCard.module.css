@@ -1,9 +1,8 @@
 .card {
-  background-color: #2b2f32;
-  color: #ffffff;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -19,22 +18,22 @@
 .info {
   display: flex;
   align-items: center;
-  gap: 15px; 
+  gap: 15px;
 }
 
 .time {
   font-size: 0.9rem;
-  color: #ffffff;
-  white-space: nowrap; 
+  color: var(--text-color);
+  white-space: nowrap;
 }
 
 .title {
   font-size: 1rem;
   font-weight: bold;
-  color: #ffffff;
+  color: var(--text-color);
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 .body {
@@ -43,7 +42,7 @@
 
 .dependencies {
   font-size: 0.9rem;
-  color: #cccccc;
+  color: var(--text-color);
   margin-top: 5px;
 }
 
@@ -57,5 +56,5 @@
 }
 
 .favoriteButton:hover {
-  color: #ffffff; 
+  color: var(--text-color);
 }

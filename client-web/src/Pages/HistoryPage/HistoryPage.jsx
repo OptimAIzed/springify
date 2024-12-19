@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import styles from "./HistoryPage.module.css";
 import HistoryCard from "../../Components/HistoryCard/HistoryCard";
 
-function HistoryPage() {
- 
-  const [isOpen, setIsOpen] = useState(true);
-
-  
+function HistoryPage({ theme, closeAction }) {
   const [history, setHistory] = useState([
     {
       date: "Thursday, 7 November 2024",
@@ -38,17 +34,10 @@ function HistoryPage() {
     },
   ]);
 
- 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
- 
   const handleClear = () => {
-    setHistory([]); 
+    setHistory([]);
   };
 
-  if (!isOpen) return null; 
   return (
     <div className={styles.overlay}>
       <div className={styles.container}>
@@ -75,8 +64,8 @@ function HistoryPage() {
         </div>
         <hr className={styles.separator} />
         <div className={styles.closeButtonContainer}>
-          
-          <button className={styles.closeButton} onClick={handleClose}>
+
+          <button className={styles.closeButton} onClick={() => closeAction(false)}>
             <span className={styles.closeText}>CLOSE</span> ESC
           </button>
         </div>
