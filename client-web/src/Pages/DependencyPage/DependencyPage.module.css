@@ -1,13 +1,106 @@
 .container {
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    min-height: 100vh; 
-  }
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 10px; 
+}
+
+.title {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.addButton {
+  padding: 8px 16px;
+  font-size: 0.9em;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+}
+
+.addButton:hover {
+  background-color: #f4f4f4;
+}
+
+
+.divider {
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
   
-  .title {
-    font-size: 2em;
-    text-align: center;
-    color: #333;
-  }
+}
+
+
+
+.noDependency {
+  font-style: italic; 
+  color: #666; 
+}
+
+.selectedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selectedItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.itemContent {
+  flex-grow: 1;
+}
+
+.category {
+  display: inline-block;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 0.8em;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dependenciesContainer {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
   
+}
