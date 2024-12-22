@@ -16,7 +16,7 @@ function LeftPanel({ theme, history, setHistory }) {
         <div onClick={() => setHistory(!history)}><CustomIcon theme={theme} icon={HistoryIcon} size={40} /></div>
       </div>
       <div className={styles.bottom}>
-        <a href="https://github.com/OptimAIzedDev/code-assistant" target="_blank"><CustomIcon theme={theme} icon={GitHubIcon} size={34} /></a>
+        <a href="https://github.com/OptimAIzed/springify" target="_blank"><CustomIcon theme={theme} icon={GitHubIcon} size={34} /></a>
       </div>
     </div>
   )
