@@ -13,7 +13,7 @@ function PhotoDrop() {
 
   return (
     <div className={styles.container}>
-      <h3>Upload an Image</h3>
+      <h3>Upload a UML class diagram image</h3>
       <input
         type="file"
         accept="image/*"
