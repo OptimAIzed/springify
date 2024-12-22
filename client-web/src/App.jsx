@@ -5,7 +5,6 @@ import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
 import HistoryPage from './Pages/HistoryPage/HistoryPage';
-import Loading from "./Components/Loading/Loading";
 
 //Images
 import LeftPanel from './Components/LeftPanel/LeftPanel';

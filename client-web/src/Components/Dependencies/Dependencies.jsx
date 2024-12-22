@@ -54,24 +54,23 @@ function Dependencies({ onAddDependency }) {
 
   return (
     <div className={styles.container}>
-      {/*  */}
       <input
         type="text"
-        placeholder="Search dependencies..."
+        placeholder="Web, Security, JPA, Actuator, Devtools..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className={styles.searchBar}
       />
 
-      {/* */}
       <ul className={styles.list}>
         {filteredDependencies.map((dep) => (
           <li
             key={dep.id}
             className={styles.listItem}
-            onClick={() => onAddDependency(dep)} 
+            onClick={() => onAddDependency(dep)}
           >
-            <strong>{dep.name}</strong> - {dep.description}
+            <strong>{dep.name}</strong>
+            <p>{dep.description}</p>
           </li>
         ))}
       </ul>

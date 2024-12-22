@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import Dependencies from "../../Components/Dependencies/Dependencies"; 
+import React, { useState, useEffect } from "react";
+import Dependencies from "../../Components/Dependencies/Dependencies";
 import styles from "./DependencyPage.module.css";
 
 function DependencyPage() {
-  const [selectedDependencies, setSelectedDependencies] = useState([]); 
-  const [isDependenciesVisible, setIsDependenciesVisible] = useState(false); 
+  const [selectedDependencies, setSelectedDependencies] = useState([]);
+  const [isDependenciesVisible, setIsDependenciesVisible] = useState(false);
 
   const handleAddDependency = (dependency) => {
     if (!selectedDependencies.find((dep) => dep.id === dependency.id)) {
@@ -45,10 +45,8 @@ function DependencyPage() {
         </button>
       </div>
 
-      {/* */}
       <div className={styles.divider}></div>
 
-      {/**/}
       <div className={styles.selectedDependencies}>
         {selectedDependencies.length === 0 ? (
           <p className={styles.noDependency}>No dependency selected</p>
