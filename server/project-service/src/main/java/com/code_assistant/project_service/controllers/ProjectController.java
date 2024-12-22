@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/projects")
 public class ProjectController {
 
     @Autowired
@@ -29,9 +29,9 @@ public class ProjectController {
         try {
             Project project = projectRepository.findById(id).orElse(null);
             if (project != null) {
-                System.out.println("this is the project : " + project.getId_user());
-                User user = userService.userById(project.getId_user());
-                project.setUser(user); 
+                System.out.println("this is the project : " + project.getUserId());
+                User user = userService.userById(project.getUserId());
+                project.setUserfield(user);
                 return ResponseEntity.ok(project);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

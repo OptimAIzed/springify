@@ -19,14 +19,4 @@ public class ProjectServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectServiceApplication.class, args);
 	}
-	@Bean
-	CommandLineRunner initialiserBaseH2(ProjectRepository projectRepository, UserService userService) {
-		User u1 = userService.userById(1L);
-		User u2 = userService.userById(2L);
-		return args ->
-		{
-			projectRepository.save(new Project(null, "ouabiba", "imade", "group1", "description1",u1,1L));
-			projectRepository.save(new Project(null, "ouabiba", "hamza", "group2", "description2",u2,2L));
-		};
-	}
 }
