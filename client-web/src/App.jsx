@@ -1,17 +1,36 @@
 import { useState } from 'react';
 import styles from './App.module.css';
+import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
 
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
-import DependencyPage from './Pages/DependencyPage/DependencyPage';
+import HistoryPage from './Pages/HistoryPage/HistoryPage';
+import Loading from "./Components/Loading/Loading";
+
+//Images
+import LeftPanel from './Components/LeftPanel/LeftPanel';
 
 function App() {
+  const [theme, setTheme] = useState("light");
+  const [history, setHistory] = useState(false);
+
   return (
-      
+    <div className={`${styles.container} ${theme == 'light' ? "light" : "dark"}`}>
+      <div className={styles.left}>
+        <div className={styles.content}>
+          <LeftPanel theme={theme} history={history} setHistory={setHistory} />
+        </div>
+      </div>
       <div className={styles.center}>
-        <DependencyPage />
-      </div >
-  
+        <HomePage theme={theme} />
+        {history && <HistoryPage theme={theme} closeAction={setHistory} />}
+      </div>
+      <div className={styles.right}>
+        <div className={styles.content}>
+          <ThemeToggle theme={theme} toggle={setTheme} />
+        </div>
+      </div>
+    </div>
   );
 }
 

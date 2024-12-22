@@ -1,4 +1,88 @@
 .container {
-    /* Example */
-    color: red;
+  margin: 20px;
+  padding: 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.submitButton {
+  background-color: var(--primary-text-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: var(--primary-text-color);
+}
+
+.radioGroup {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.radioGroup input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.radioGroup input[type="radio"]:checked {
+  accent-color: var(--primary-text-color);
+}
+
+.radioOption span {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: grid;
+  grid-template-columns: 150px auto;
+  align-items: center;
+  gap: 10px;
+}
+
+label {
+  text-align: right;
+  margin: 0;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 3px solid var(--input-border);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-bottom: 3px solid var(--primary-text-color);
+}
+
+.textarea {
+  resize: none;
 }

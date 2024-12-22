@@ -1,7 +1,7 @@
 /* Base styling */
 :root {
   --primary-text-color: #6db33f;
-  --border-color: #4a5053;
+  --secondary-background: #ecf2f2;
 }
 
 * {
@@ -31,8 +31,12 @@ h6 {
   font-weight: 600;
 }
 
-button,
-input {
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+button {
   font-family: inherit;
   border-radius: 4px;
 }
@@ -42,34 +46,32 @@ button {
   outline: none;
 }
 
-input:focus,
-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--primary-color);
-}
-
 /* Light Theme */
 .light {
   --background-color: #ffffff;
   --text-color: #333333;
-  --primary-color: #7b8cde;
-  --secondary-color: #f1f3f5;
-  --button-bg: #7b8cde;
-  --button-text-color: #ffffff;
-  --input-bg: #f8f9fa;
-  --input-border: #d1d5db;
+  --border-color: #e0e8e8;
+  --primary-color: #6db33f;
+  --secondary-color: #ecf2f2;
+  --button-bg: #ffffff;
+  --button-border: #1b1f23;
+  --button-text-color: #000;
+  --input-bg: var(--background-color);
+  --input-border: #1b1f23;
   --input-text-color: #495057;
 }
 
 .dark {
   --background-color: #1b1f23;
   --text-color: #ffffff;
-  --primary-color: #7b8cde;
-  --secondary-color: #333333;
-  --button-bg: #575a8d;
-  --button-text-color: #ffffff;
-  --input-bg: #333333;
-  --input-border: #444444;
+  --border-color: #515353;
+  --primary-color: #6db33f;
+  --secondary-color: #2b2f32;
+  --button-bg: #1b1f23;
+  --button-border: #ffffff;
+  --button-text-color: #fff;
+  --input-bg: var(--background-color);
+  --input-border: #ffffff;
   --input-text-color: #eaeaea;
 }
 
@@ -90,11 +92,6 @@ button {
   transition: background-color 0.2s, border 0.2s;
 }
 
-button:hover {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
 button:disabled {
   background-color: #ccc;
   border-color: #ccc;
@@ -111,9 +108,7 @@ input {
   transition: border-color 0.2s;
 }
 
-input:focus {
-  border-color: var(--primary-color);
-}
+input:focus {}
 
 /* Form sections */
 .form-group {
@@ -134,9 +129,7 @@ input:focus {
   border: 1px solid var(--input-border);
 }
 
-.form-group input:focus {
-  border-color: var(--primary-color);
-}
+.form-group input:focus {}
 
 /* Card Styling */
 .card {

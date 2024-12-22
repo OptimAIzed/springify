@@ -1,4 +1,34 @@
 .container {
-    /* Example */
-    color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  width: calc(100% - 20%);
+  background-color: var(--secondary-background);
+
+  position: fixed;
+  bottom: 0;
+}
+
+.button {
+  font-size: 17px;
+  font-weight: bolder;
+  color: var(--button-text-color);
+  background-color: var(--button-bg);
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: 2px solid var(--button-border);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: var(--button-bg);
+  background-color: var(--button-border);
+}
+
+@media screen and (max-width: 1675px) {
+  .container {
+    width: calc(100% - 152px);
+  }
 }

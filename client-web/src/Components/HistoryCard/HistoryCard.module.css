@@ -1,4 +1,60 @@
-.container {
-    /* Example */
-    color: red;
+.card {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 15px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.time {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.body {
+  margin-top: 5px;
+}
+
+.dependencies {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 5px;
+}
+
+.favoriteButton {
+  background: none;
+  border: none;
+  color: #7d7f81;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.favoriteButton:hover {
+  color: var(--text-color);
 }
