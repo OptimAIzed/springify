@@ -1,16 +1,15 @@
 package com.code_assistant.project_service.controllers;
 
+import com.code_assistant.project_service.dto.ProjectDto;
 import com.code_assistant.project_service.entities.Project;
 import com.code_assistant.project_service.entities.User;
 import com.code_assistant.project_service.repositories.ProjectRepository;
-import com.code_assistant.project_service.services.UserService;
+import com.code_assistant.project_service.services.interfaces.ProjectService;
+import com.code_assistant.project_service.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +21,9 @@ public class ProjectController {
     private ProjectRepository projectRepository;
 
     @Autowired
+    private ProjectService projectService;
+    @Autowired
     private UserService userService;
-
     @GetMapping("/{id}")
     public ResponseEntity<Project> findById(@PathVariable Long id) {
         try {
@@ -58,6 +58,7 @@ public class ProjectController {
         try {
             User user = userService.userById(id);
             if (user != null) {
+                System.out.println("getting the user : " + user.getPrenom() + user.getId());
                 List<Project> projects = projectRepository.findByUserId(id);
                 return ResponseEntity.ok(projects);
             } else {
@@ -66,5 +67,9 @@ public class ProjectController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @PostMapping("/save")
+    public ResponseEntity<ProjectDto> save(@RequestBody  ProjectDto projectDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.projectService.save(projectDto));
     }
 }
