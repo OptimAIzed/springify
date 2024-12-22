@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-// Login function to authenticate a user
 export const login = async (email, password) => {
     try {
-        // Make POST request to login
         const response = await axios.post(`http://localhost:8888/api/auth/signin`, {
             email,
             password
@@ -11,21 +9,17 @@ export const login = async (email, password) => {
         
         if (response.status === 200) {
             console.log("Login successful:", response.data);
-            return response.data; // Return user data or token
+            return response.data; 
         } else {
             console.error("Login failed with status:", response.status);
             return null;
         }
     } catch (error) {
-        // Handle errors (e.g., network issues, 400/500 responses)
         if (error.response) {
-            // Server responded with a status other than 2xx
             console.error("Error response:", error.response.data);
         } else if (error.request) {
-            // Request was made but no response received
             console.error("Error request:", error.request);
         } else {
-            // Something else happened
             console.error("Error:", error.message);
         }
 

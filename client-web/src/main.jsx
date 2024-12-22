@@ -3,10 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-//Pages
+// Pages
 import App from './App.jsx'
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import AuthPage from './Pages/AuthPage/AuthPage.jsx';
+import UserProvider from './Context/UserContext.jsx';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  </StrictMode>
+);

@@ -1,16 +1,21 @@
+import { useNavigate } from "react-router";
+import { UserContext } from "../../Context/UserContext";
 import { login } from "../../services/authService";
 import styles from "./AuthPage.module.css";
-import { useState } from "react";
-//components
+import { useContext, useState } from "react";
 const AuthPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const { token } = useContext(UserContext);
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("this is the token  : " + token)
         const response = await login(email, password);
+        localStorage.setItem('token', response.access_token)
         if (response) {
             console.log("Login successful:", response);
+            navigate("/");
         } else {
             console.error("Login failed");
         }

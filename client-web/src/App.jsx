@@ -5,7 +5,6 @@ import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
 //Components
 import HomePage from "./Pages/HomePage/HomePage";
 import HistoryPage from './Pages/HistoryPage/HistoryPage';
-import Loading from "./Components/Loading/Loading";
 
 //Images
 import LeftPanel from './Components/LeftPanel/LeftPanel';
@@ -13,7 +12,6 @@ import LeftPanel from './Components/LeftPanel/LeftPanel';
 function App() {
   const [theme, setTheme] = useState("light");
   const [history, setHistory] = useState(false);
-
   return (
     <div className={`${styles.container} ${theme == 'light' ? "light" : "dark"}`}>
       <div className={styles.left}>
