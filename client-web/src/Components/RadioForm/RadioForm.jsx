@@ -2,9 +2,9 @@ import { useState } from "react";
 import styles from "./RadioForm.module.css";
 
 function RadioForm() {
-  const [projectType, setProjectType] = useState("");
-  const [language, setLanguage] = useState("");
-  const [springBootVersion, setSpringBootVersion] = useState("");
+  const [projectType, setProjectType] = useState("Gradle - Groovy");
+  const [language, setLanguage] = useState("Java");
+  const [springBootVersion, setSpringBootVersion] = useState("3.4.1");
 
   const handleProjectTypeChange = (event) => {
     setProjectType(event.target.value);
@@ -113,11 +113,11 @@ function RadioForm() {
               <input
                 type="radio"
                 name="springBootVersion"
-                value="3.4.0"
-                checked={springBootVersion === "3.4.0"}
+                value="3.4.1"
+                checked={springBootVersion === "3.4.1"}
                 onChange={handleSpringBootVersionChange}
               />
-              <span>3.4.0</span>
+              <span>3.4.1</span>
             </label>
             <label className={styles.radioOption}>
               <input
