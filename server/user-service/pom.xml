@@ -11,7 +11,7 @@
 	<groupId>com.code-assistant</groupId>
 	<artifactId>user-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>user-service</name>
 	<description>code-assistant project</description>
 	<url/>

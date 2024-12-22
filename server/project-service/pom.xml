@@ -11,7 +11,7 @@
 	<groupId>com.code-assistant</groupId>
 	<artifactId>project-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>project-service</name>
 	<description>code-assistant project</description>
 	<url/>
@@ -32,7 +32,6 @@
 		<spring-cloud.version>2024.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -104,6 +103,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //Pages
 import App from './App.jsx'
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
+import AuthPage from './Pages/AuthPage/AuthPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,11 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/login",
+    element: <AuthPage />,
+    errorElement: <ErrorPage />,
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(

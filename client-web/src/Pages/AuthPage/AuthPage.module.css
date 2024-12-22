@@ -1,0 +1,73 @@
+.authPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+    font-family: 'Arial', sans-serif;
+}
+
+.loginForm {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+label {
+    display: flex;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333333;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.submitButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
+
+.submitButton:active {
+    background-color: #004085;
+}
+
+@media (max-width: 768px) {
+    .authPage {
+        padding: 20px;
+    }
+}
