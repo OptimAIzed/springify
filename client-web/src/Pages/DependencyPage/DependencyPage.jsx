@@ -2,17 +2,22 @@ import React, { useState, useEffect } from "react";
 import Dependencies from "../../Components/Dependencies/Dependencies";
 import styles from "./DependencyPage.module.css";
 
-function DependencyPage() {
+function DependencyPage({ dependencies, setDependencies }) {
   const [selectedDependencies, setSelectedDependencies] = useState([]);
   const [isDependenciesVisible, setIsDependenciesVisible] = useState(false);
 
   const handleAddDependency = (dependency) => {
     if (!selectedDependencies.find((dep) => dep.id === dependency.id)) {
+      setDependencies([...dependencies, dependency.dependency]);
       setSelectedDependencies([...selectedDependencies, dependency]);
     }
   };
 
   const handleDeleteDependency = (id) => {
+    setDependencies(dependencies.filter((dep) => {
+      const dependencyToRemove = selectedDependencies.find((d) => d.id === id);
+      return dep !== dependencyToRemove?.dependency;
+    }));
     setSelectedDependencies(selectedDependencies.filter((dep) => dep.id !== id));
   };
 
@@ -74,7 +79,7 @@ function DependencyPage() {
       {isDependenciesVisible && (
         <div className={styles.overlay}>
           <div className={styles.dependenciesContainer}>
-            <Dependencies onAddDependency={handleAddDependency} />
+            <Dependencies dependencies={dependencies} onAddDependency={handleAddDependency} />
           </div>
         </div>
       )}
