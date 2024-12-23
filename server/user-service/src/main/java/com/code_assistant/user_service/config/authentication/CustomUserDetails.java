@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.config.Authentication;
+package com.code_assistant.user_service.config.authentication;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +17,6 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// Return authorities based on role
-//		System.out.println("this is role: " + role + " of user : " + email);
         return Collections.emptyList();
 	}
 

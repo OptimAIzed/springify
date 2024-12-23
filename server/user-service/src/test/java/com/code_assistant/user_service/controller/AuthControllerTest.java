@@ -1,5 +1,6 @@
 package com.code_assistant.user_service.controller;
 
+import com.code_assistant.user_service.controller.AuthController;
 import com.code_assistant.user_service.dto.UserDto;
 import com.code_assistant.user_service.service.interfaces.UserService;
 import com.code_assistant.user_service.dto.AuthenticationResponse;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,7 +26,6 @@ public class AuthControllerTest {
 
     @Mock
     private UserService userService;
-
     @InjectMocks
     private AuthController authController;
 

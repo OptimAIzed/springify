@@ -1,7 +1,7 @@
 package com.code_assistant.user_service.helper.mappers;
 
 
-import com.code_assistant.user_service.config.Authentication.CustomUserDetails;
+import com.code_assistant.user_service.config.authentication.CustomUserDetails;
 import com.code_assistant.user_service.dto.UserDto;
 import com.code_assistant.user_service.model.Users;
 

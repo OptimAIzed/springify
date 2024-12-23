@@ -1,6 +1,6 @@
 package com.code_assistant.user_service.helper.util;
 
-import com.code_assistant.user_service.config.Authentication.CustomUserDetails;
+import com.code_assistant.user_service.config.authentication.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,9 +26,9 @@ public class JwtUtil{
 	private long jwtExpiration;
 	@Value("${application.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
-
+	String email = "email";
 	public String extractEmail(String token) {
-		return extractClaim(token, claims -> claims.get("email", String.class));
+		return extractClaim(token, claims -> claims.get(email, String.class));
 	}
 	public Long extractId( String token) {
 		return extractClaim(token, claims -> claims.get("id", Long.class));
@@ -43,7 +43,7 @@ public class JwtUtil{
 	public String generateToken( CustomUserDetails userDetails) {
 		Map<String, Object> extraClaims = new HashMap<>();
 		extraClaims.put("id", userDetails.getId());
-		extraClaims.put("email", userDetails.getEmail());
+		extraClaims.put(email, userDetails.getEmail());
 		return generateToken(extraClaims, userDetails);
 	}
 
@@ -59,7 +59,7 @@ public class JwtUtil{
 	) {
 		Map<String, Object> extraClaims = new HashMap<>();
 		extraClaims.put("id", userDetails.getId());
-		extraClaims.put("email", userDetails.getEmail());
+		extraClaims.put(email, userDetails.getEmail());
 		return buildToken(extraClaims, userDetails, refreshExpiration);
 	}
 
@@ -79,9 +79,9 @@ public class JwtUtil{
 	}
 
 	public boolean isTokenValid(String token, CustomUserDetails customUserDetails) {
-		final String email = extractEmail(token);
+		final String emailExtracted = extractEmail(token);
 		extractClaim(token, Claims::getSubject);
-		return (email.equals(customUserDetails.getEmail())) && !isTokenExpired(token);
+		return (emailExtracted.equals(customUserDetails.getEmail())) && !isTokenExpired(token);
 	}
 
 	private boolean isTokenExpired(String token) {

@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.config.Authentication;
+package com.code_assistant.user_service.config.authentication;
 
 import com.code_assistant.user_service.exception.wrapper.ResourceNotFoundException;
 import com.code_assistant.user_service.model.Users;

@@ -8,6 +8,7 @@ import App from './App.jsx'
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import AuthPage from './Pages/AuthPage/AuthPage.jsx';
 import UserProvider from './Context/UserContext.jsx';
+import RegisterPage from './Pages/RegisterPage/RegisterPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
     path: "/login",
     element: <AuthPage />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
+    errorElement: <ErrorPage />
   }
 ]);
 

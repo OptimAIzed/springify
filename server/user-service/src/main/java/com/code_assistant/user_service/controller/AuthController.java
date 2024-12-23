@@ -23,7 +23,6 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserDto userDto) {
-        System.out.println("signin : "+userDto.getPassword()+userDto.getEmail());
         return ResponseEntity.ok().body(this.userService.login(userDto));
     }
     @PostMapping("/signup")
@@ -41,15 +40,14 @@ public class AuthController {
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        System.out.println ("refresh token");
         String token = authorizationHeader.substring(7);
         return ResponseEntity.ok(userService.refreshToken(token));
     }
     @PutMapping
     public ResponseEntity<UserDto> updateUser(
-            @RequestBody  UserDto UserDto
+            @RequestBody  UserDto userDto
     ) {
-        return ResponseEntity.ok(this.userService.update(UserDto));
+        return ResponseEntity.ok(this.userService.update(userDto));
     }
 
     @GetMapping("/all")
@@ -58,8 +56,8 @@ public class AuthController {
     }
 
     @GetMapping("/exists/{id}")
-    public ResponseEntity<Boolean> existsById(@PathVariable("id") Long UserId) {
-        return ResponseEntity.ok(this.userService.existsById(UserId));
+    public ResponseEntity<Boolean> existsById(@PathVariable("id") Long userId) {
+        return ResponseEntity.ok(this.userService.existsById(userId));
     }
 
     @GetMapping("/{id}")

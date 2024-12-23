@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.config.Authentication;
+package com.code_assistant.user_service.config.authentication;
 
 import com.code_assistant.user_service.helper.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -35,7 +35,6 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 			filterChain.doFilter(request, response);
 			return;
 		}
-		System.out.println(request.getRequestURI());
 		final String authHeader = request.getHeader("Authorization");
 		final String jwt;
 		final String userEmail;
@@ -68,7 +67,6 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 		response.setHeader("error message", e.getMessage());
 		response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
 		e.printStackTrace();
-		System.out.println("Token validation failed: " + e.getMessage());
 	}
 	}
 

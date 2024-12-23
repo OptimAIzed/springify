@@ -3,8 +3,7 @@ package com.code_assistant.user_service.dto;
 import lombok.*; 
 
 @Builder
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto{

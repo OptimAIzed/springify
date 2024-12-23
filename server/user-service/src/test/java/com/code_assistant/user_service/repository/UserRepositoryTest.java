@@ -3,6 +3,7 @@ package com.code_assistant.user_service.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.code_assistant.user_service.model.Users;
+import com.code_assistant.user_service.repository.UserRepository;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;

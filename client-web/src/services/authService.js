@@ -22,43 +22,27 @@ export const login = async (email, password) => {
         } else {
             console.error("Error:", error.message);
         }
-
         return null;
     }
 };
 
-export const Signup = async (email, password) => {
+export const Signup = async (data) => {
     try {
-        // Make POST request to signup
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL_AUTH}/api/auth/signup`, {
-            "firstname": "ouabiba",
-            "lastname": "hamza",
-            "email": email,
-            "password": password,
-            "gender": "false"
+        const response = await axios.post("http://localhost:8888/api/auth/signup", {
+            "firstname": data["firstName"],
+            "lastname": data["lastName"],
+            "email": data["email"],
+            "password": data["password"],
+            "gender": data["gender"] == "male" ? 0 : 1
         });
-        
-        // Assuming the response has a data object with authentication token or user details
-        if (response.status === 200) {
+
+        if (response.status === 201) {
             console.log("Signup successful:", response.data);
-            return response.data; // Return user data or token
+            return response.data;
         } else {
-            console.error("Signup failed with status:", response.status);
-            return null;
+            throw new Error(`Signup failed with status: ${response.status}`);
         }
     } catch (error) {
-        // Handle errors (e.g., network issues, 400/500 responses)
-        if (error.response) {
-            // Server responded with a status other than 2xx
-            console.error("Error response:", error.response.data);
-        } else if (error.request) {
-            // Request was made but no response received
-            console.error("Error request:", error.request);
-        } else {
-            // Something else happened
-            console.error("Error:", error.message);
-        }
-
-        return null;
+        throw new Error(`Error: ${error.response ? error.response.data : error.message}`);
     }
 }

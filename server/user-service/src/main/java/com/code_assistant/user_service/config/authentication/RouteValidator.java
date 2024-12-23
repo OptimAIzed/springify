@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.config.Authentication;
+package com.code_assistant.user_service.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,6 @@ public class RouteValidator {
             "/api/auth/signup"
     );
     public static boolean isSecured (HttpServletRequest request){
-        System.out.println ("request.getRequestURI ()"+request.getRequestURI ());
 
         return  openApiEndpoints
                 .stream()

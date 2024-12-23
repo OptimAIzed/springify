@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.service.implementations;
+package com.code_assistant.user_service;
 
 import com.code_assistant.user_service.dto.AuthenticationResponse;
 import com.code_assistant.user_service.dto.UserDto;
@@ -7,11 +7,13 @@ import com.code_assistant.user_service.exception.wrapper.ResourceNotFoundExcepti
 import com.code_assistant.user_service.helper.mappers.UserMapper;
 import com.code_assistant.user_service.model.Users;
 import com.code_assistant.user_service.repository.UserRepository;
+import com.code_assistant.user_service.service.implementations.UserServiceImpl;
 import com.code_assistant.user_service.service.interfaces.UserService;
 import com.code_assistant.user_service.helper.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +23,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 public class UserServiceImplTest {
 
     @Mock
