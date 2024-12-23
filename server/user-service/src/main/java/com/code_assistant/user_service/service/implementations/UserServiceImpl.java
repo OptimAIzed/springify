@@ -52,26 +52,18 @@ public class UserServiceImpl implements UserService {
 
 		@Override
 		public AuthenticationResponse login(UserDto userDto) {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
+			);
 
-			Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword()));
-			if (authenticate.isAuthenticated()) {
-				CustomUserDetails customUserDetails = userRepository.findByEmail(userDto.getEmail())
-						.map (UserMapper::mapToCustomUserDetails)
-						.orElseThrow(() -> new ResourceNotFoundException(
-						String.format("User not found with id: %s", userDto.getId ())
-				));
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			String jwtToken = jwtUtil.generateToken(userDetails);
+			String refreshToken = jwtUtil.generateRefreshToken(userDetails);
 
-				System.out.println("isAuthenticated");
-
-				String jwtToken = jwtUtil.generateToken( customUserDetails);
-				String refreshToken = jwtUtil.generateRefreshToken(customUserDetails);
-				return AuthenticationResponse.builder()
-						.accessToken(jwtToken)
-						.refreshToken(refreshToken)
-						.build();
-			} else {
-				throw new RuntimeException("invalid access");
-			}
+			return AuthenticationResponse.builder()
+					.accessToken(jwtToken)
+					.refreshToken(refreshToken)
+					.build();
 		}
 
 
