@@ -22,6 +22,7 @@ class ProjectRepositoryTest {
     User user;
     @BeforeEach
     public void setup() {
+        projectRepository.deleteAll();
         user = new User();
         user.setNom("ouabiba");
         user.setPrenom("hamza");

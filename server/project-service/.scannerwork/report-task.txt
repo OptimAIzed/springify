@@ -1,0 +1,6 @@
+projectKey=springify-project-service
+serverUrl=http://localhost:9000
+serverVersion=24.12.0.100206
+dashboardUrl=http://localhost:9000/dashboard?id=springify-project-service
+ceTaskId=8fb81e3d-d0b2-46bc-a92e-514d38f5c2f3
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8fb81e3d-d0b2-46bc-a92e-514d38f5c2f3

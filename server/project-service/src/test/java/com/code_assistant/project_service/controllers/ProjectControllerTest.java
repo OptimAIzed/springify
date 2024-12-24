@@ -162,4 +162,53 @@ class ProjectControllerTest {
 
         verify(projectService, times(1)).save(projectDto);
     }
+    @Test
+    void testFindById_InternalServerError() throws Exception {
+        when(projectRepository.findById(anyLong())).thenThrow(new RuntimeException("Database error"));
+
+        mockMvc.perform(get("/api/projects/{id}", 1L))
+                .andExpect(status().isInternalServerError());
+
+        verify(projectRepository, times(1)).findById(anyLong());
+    }
+
+    @Test
+    void testFindAll_InternalServerError() throws Exception {
+        when(projectRepository.findAll()).thenThrow(new RuntimeException("Database error"));
+
+        mockMvc.perform(get("/api/projects"))
+                .andExpect(status().isInternalServerError());
+
+        verify(projectRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindByUser_NoProjectsFound() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setPrenom("John");
+
+        when(userService.userById(1L)).thenReturn(user);
+        when(projectRepository.findByUserId(1L)).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/projects/user/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+
+        verify(userService, times(1)).userById(1L);
+        verify(projectRepository, times(1)).findByUserId(1L);
+    }
+
+    @Test
+    void testFindById_InvalidId() throws Exception {
+        mockMvc.perform(get("/api/projects/{id}", "invalid"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testFindByUser_InvalidId() throws Exception {
+        mockMvc.perform(get("/api/projects/user/{id}", "invalid"))
+                .andExpect(status().isBadRequest());
+    }
+
 }
