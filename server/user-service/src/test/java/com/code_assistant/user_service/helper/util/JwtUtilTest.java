@@ -34,7 +34,6 @@ public class JwtUtilTest {
         when(customUserDetails.getId()).thenReturn(1L);
         when(customUserDetails.getEmail()).thenReturn("user@example.com");
 
-        // Generate a token for testing
         token = jwtUtil.generateToken(customUserDetails);
     }
 

@@ -4,6 +4,7 @@ package com.code_assistant.user_service.helper.enums;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RoleTest {
 
@@ -27,6 +28,6 @@ public class RoleTest {
             }
         }
 
-        assertEquals(true, foundClient, "CLIENT role should be present in the enum values");
+        assertTrue(foundClient, "CLIENT role should be present in the enum values");
     }
 }

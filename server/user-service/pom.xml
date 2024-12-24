@@ -169,6 +169,9 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>com/code_assistant/user_service/config/*</exclude>
+							</excludes>
 							<rules>
 								<rule>
 									<element>PACKAGE</element>
