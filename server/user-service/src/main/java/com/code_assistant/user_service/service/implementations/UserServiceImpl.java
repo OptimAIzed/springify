@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
 		@Override
 		public List<UserDto> findAll(){
-			System.out.println("findAll");
 			return  this.userRepository.findAll()
 					.stream()
 					.map(UserMapper::map)
@@ -68,19 +67,21 @@ public class UserServiceImpl implements UserService {
 		}
 
 
-		@Override
-		public UserDto update(UserDto userDto){
-			Users customer = this.userRepository.findById(userDto.getId())
-					.orElseThrow(() -> new ResourceNotFoundException(
-							String.format("Cannot update customer:: No customer found with the provided ID: %s", userDto.getId())
-					));
-			if (!passwordEncoder.matches(userDto.getPassword(), customer.getPassword())) {
-				throw new IllegalStateException("Wrong password");
-			}
+	@Override
+	public UserDto update(UserDto userDto) {
+		Users customer = this.userRepository.findById(userDto.getId())
+				.orElseThrow(() -> new ResourceNotFoundException(
+						String.format("Cannot update user:: No user found with the provided ID: %s", userDto.getId())
+				));
 
-			return UserMapper.map(this.userRepository
-					.save(UserMapper.map(userDto)));
+		if (userDto.getPassword() != null && !passwordEncoder.matches(userDto.getPassword(), customer.getPassword())) {
+			throw new IllegalStateException("Wrong password");
 		}
+		Users updatedUser = UserMapper.map(userDto);
+		updatedUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		Users saved = userRepository.save(updatedUser);
+		return UserMapper.map(saved);
+	}
 	@Override
 	public AuthenticationResponse register(UserDto userDto) {
 		if (userRepository.existsByEmail(userDto.getEmail())) {
@@ -99,35 +100,6 @@ public class UserServiceImpl implements UserService {
 				.userDto(userDto)
 				.build();
 	}
-	@Override
-	public AuthenticationResponse refreshToken(String refreshToken ) {
-
-		final String userEmail = jwtUtil.extractEmail (refreshToken);
-
-		// Validate the extracted email and the token
-		if (userEmail != null) {
-			CustomUserDetails customUserDetails = this.userRepository.findByEmail(userEmail)
-					.map(UserMapper::mapToCustomUserDetails)
-					.orElseThrow(() -> new ResourceNotFoundException(
-							String.format("User not found with email: %s", userEmail)
-					));
-
-			if (jwtUtil.isTokenValid (refreshToken, customUserDetails)) {
-				// Generate new tokens if the refresh token is valid
-				String newJwtToken = jwtUtil.generateToken (customUserDetails);
-				String newRefreshToken = jwtUtil.generateRefreshToken (customUserDetails);
-
-				return AuthenticationResponse.builder ()
-						.accessToken (newJwtToken)
-						.refreshToken (newRefreshToken)
-						.build ();
-			}else {
-				throw new RuntimeException("Refresh token is invalid or expired");
-			}
-		} else {
-			throw new RuntimeException("Invalid refresh token");
-		}
-    }
 
 	@Override
 		public void deleteById(Long id) {

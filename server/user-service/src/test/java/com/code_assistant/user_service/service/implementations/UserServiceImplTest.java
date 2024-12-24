@@ -1,4 +1,4 @@
-package com.code_assistant.user_service;
+package com.code_assistant.user_service.service.implementations;
 
 import com.code_assistant.user_service.dto.AuthenticationResponse;
 import com.code_assistant.user_service.dto.UserDto;
@@ -13,7 +13,6 @@ import com.code_assistant.user_service.helper.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -120,13 +119,39 @@ public class UserServiceImplTest {
         assertEquals("jwtToken", response.getAccessToken());
         assertEquals("refreshToken", response.getRefreshToken());
     }
+    @Test
+    public void testUpdate_Successful() {
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+
+        UserDto updatedUserDto = new UserDto(user.getId(), "UpdatedFirstName", "UpdatedLastName",
+                "updated.email@example.com", "newPassword123", true);
+
+        when(passwordEncoder.matches(eq(updatedUserDto.getPassword()), eq(user.getPassword()))).thenReturn(true);
+        when(passwordEncoder.encode(eq(updatedUserDto.getPassword()))).thenReturn("encodedPassword123");
+        when(userRepository.save(any(Users.class))).thenReturn(UserMapper.map(updatedUserDto));
+        UserDto result = userService.update(updatedUserDto);
+        System.out.println("this is result" + result);
+        assertNotNull(result);
+        assertEquals("UpdatedFirstName", result.getFirstname());
+        assertEquals("UpdatedLastName", result.getLastname());
+        assertEquals("updated.email@example.com", result.getEmail());
+
+        verify(userRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).save(any(Users.class));
+        verify(passwordEncoder, times(1)).encode("newPassword123");
+    }
 
     @Test
     public void testUpdate_UserNotFound() {
         when(userRepository.findById(userDto.getId())).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> userService.update(userDto));
+
+        verify(userRepository, times(1)).findById(userDto.getId());
+        verify(userRepository, never()).save(any(Users.class));  // Ensure save was not called
     }
+
 
 
     @Test
@@ -147,4 +172,5 @@ public class UserServiceImplTest {
         assertTrue(exists);
         verify(userRepository, times(1)).findById(user.getId());
     }
+
 }

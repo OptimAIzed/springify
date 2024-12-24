@@ -1,4 +1,4 @@
-package com.code_assistant.user_service.service.implementations;
+package com.code_assistant.user_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
