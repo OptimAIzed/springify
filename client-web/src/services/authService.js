@@ -9,7 +9,7 @@ export const login = async (email, password) => {
         console.log("this is the response : " + response)
         if (response.status === 200) {
             console.log("Login successful:", response.data);
-            return response.data; 
+            return response.data;
         } else {
             throw new Error(`SIGNIN failed with status: ${response.status}`);
         }

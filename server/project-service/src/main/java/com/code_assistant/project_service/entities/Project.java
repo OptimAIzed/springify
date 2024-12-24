@@ -31,6 +31,7 @@ public class Project {
     private String baseDir;
     private String description;
     private Long userId;
+    private String type;
     private String dependencies;
     @CreationTimestamp
     private Timestamp creationDate;

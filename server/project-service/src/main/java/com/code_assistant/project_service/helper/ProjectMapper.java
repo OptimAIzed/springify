@@ -20,6 +20,7 @@ public class ProjectMapper {
 				.packageName(project.getPackageName())
 				.packaging(project.getPackaging())
 				.description(project.getDescription())
+				.type(project.getType())
 				.build();
 	}
 
@@ -36,6 +37,7 @@ public class ProjectMapper {
 				.bootVersion(projectDto.getBootVersion())
 				.language(projectDto.getLanguage())
 				.packaging(projectDto.getPackaging())
+				.type(projectDto.getType())
 				.dependencies(projectDto.getDependencies())
 				.build();
 	}
