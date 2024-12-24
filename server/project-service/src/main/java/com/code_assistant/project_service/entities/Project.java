@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,15 +20,23 @@ public class Project {
     @Id
     @GeneratedValue
     private Long id;
-    private String nom;
-    private String artifact;
-    private String groupName;
+    private String name;
+    private String artifactId;
+    private String groupId;
+    private String packageName;
+    private String javaVersion;
+    private String language;
+    private String packaging;
+    private String bootVersion;
+    private String baseDir;
     private String description;
     private Long userId;
+    private String dependencies;
     @CreationTimestamp
     private Timestamp creationDate;
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
     @Transient
     User userfield;
+
 }

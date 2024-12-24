@@ -48,9 +48,9 @@ class ProjectControllerTest {
         Project project = new Project();
         project.setId(1L);
         project.setUserId(1L);
-        project.setArtifact("com.example.demo");
+        project.setArtifactId("com.example.demo");
         project.setDescription("Demo Project");
-        project.setGroupName("Demo Group");
+        project.setGroupId("Demo Group");
 
         User user = new User();
         user.setId(1L);
@@ -85,9 +85,9 @@ class ProjectControllerTest {
         Project project = new Project();
         project.setId(1L);
         project.setUserId(1L);
-        project.setArtifact("com.example.demo");
+        project.setArtifactId("com.example.demo");
         project.setDescription("Demo Project");
-        project.setGroupName("Demo Group");
+        project.setGroupId("Demo Group");
         when(projectRepository.findAll()).thenReturn(List.of(project));
 
         mockMvc.perform(get("/api/projects"))
@@ -109,9 +109,9 @@ class ProjectControllerTest {
         Project project = new Project();
         project.setId(1L);
         project.setUserId(1L);
-        project.setArtifact("com.example.demo");
+        project.setArtifactId("com.example.demo");
         project.setDescription("Demo Project");
-        project.setGroupName("Demo Group");
+        project.setGroupId("Demo Group");
 
         when(userService.userById(1L)).thenReturn(user);
         when(projectRepository.findByUserId(1L)).thenReturn(List.of(project));
@@ -141,14 +141,14 @@ class ProjectControllerTest {
     @Test
     void testSave_Success() throws Exception {
         ProjectDto projectDto = new ProjectDto();
-        projectDto.setArtifact("com.example.demo");
+        projectDto.setArtifactId("com.example.demo");
         projectDto.setDescription("Demo Project");
-        projectDto.setGroupName("Demo Group");
+        projectDto.setGroupId("Demo Group");
 
         ProjectDto savedProjectDto = new ProjectDto();
-        savedProjectDto.setArtifact("com.example.demo");
+        savedProjectDto.setArtifactId("com.example.demo");
         savedProjectDto.setDescription("Demo Project");
-        savedProjectDto.setGroupName("Demo Group");
+        savedProjectDto.setGroupId("Demo Group");
 
         when(projectService.save(projectDto)).thenReturn(savedProjectDto);
 
