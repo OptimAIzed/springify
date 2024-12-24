@@ -6,28 +6,22 @@ export const login = async (email, password) => {
             email,
             password
         });
-        
+        console.log("this is the response : " + response)
         if (response.status === 200) {
             console.log("Login successful:", response.data);
             return response.data; 
         } else {
-            console.error("Login failed with status:", response.status);
-            return null;
+            throw new Error(`SIGNIN failed with status: ${response.status}`);
         }
     } catch (error) {
-        if (error.response) {
-            console.error("Error response:", error.response.data);
-        } else if (error.request) {
-            console.error("Error request:", error.request);
-        } else {
-            console.error("Error:", error.message);
-        }
-        return null;
+        console.log(error)
+        throw new Error(`Error: ${error.response ? error.response.data : error.message}`);
     }
 };
 
 export const Signup = async (data) => {
     try {
+        console.log(data)
         const response = await axios.post("http://localhost:8888/api/auth/signup", {
             "firstname": data["firstName"],
             "lastname": data["lastName"],
@@ -46,3 +40,4 @@ export const Signup = async (data) => {
         throw new Error(`Error: ${error.response ? error.response.data : error.message}`);
     }
 }
+

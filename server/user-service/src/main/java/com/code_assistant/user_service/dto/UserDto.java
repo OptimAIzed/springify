@@ -1,6 +1,7 @@
 package com.code_assistant.user_service.dto;
 
-import lombok.*; 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 @Builder
 @Data

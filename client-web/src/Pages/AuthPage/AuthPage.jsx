@@ -1,30 +1,43 @@
 import { useNavigate } from "react-router";
-import { UserContext } from "../../Context/UserContext";
 import { login } from "../../services/authService";
 import styles from "./AuthPage.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../Context/UserContext";
 const AuthPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const {updateUserContext,token} = useContext(UserContext);
 
-    const { token } = useContext(UserContext);
     const navigate = useNavigate();
 
-
+    useEffect(() => {
+        if(token != null) {
+          navigate('/')
+        }
+    },[])
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            console.log("this is the token  : " + token)
-            const response =  await login(email, password);
-            console.log(response)
-            localStorage.setItem('token', response.access_token)
-            navigate("/");
-        } catch(error) {
-            setError("Error logging in" + error);
+            const response = await login(email, password);
+            console.log(response);
+    
+            localStorage.setItem('token', response.access_token);
+    
+            const userInfo = {
+                firstname: response.user_info.firstname,
+                lastname: response.user_info.lastname, 
+            };
+            localStorage.setItem('user_info', JSON.stringify(userInfo));
+            updateUserContext();
+            navigate('/');  
+    
+        } catch (error) {
+            setError("Login failed");
         }
     };
-
+    
+    
     return (
         <div className={styles.authPage}>
             <form onSubmit={handleSubmit} className={styles.loginForm}>

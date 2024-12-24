@@ -5,11 +5,17 @@ import RadioForm from "../../Components/RadioForm/RadioForm";
 import PhotoDrop from "../../Components/PhotoDrop/PhotoDrop";
 import ProjectForm from "../../Components/ProjectForm/ProjectForm";
 import { UserContext } from "../../Context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function HomePage({ theme }) {
   const { token } = useContext(UserContext);
-
+  const navigate = useNavigate()
+  useEffect(() => {
+     if(token == null) {
+        navigate('/login')
+     }
+  },[])
   return (
     token != null ? (
       <div className={styles.container}>

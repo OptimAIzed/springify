@@ -20,7 +20,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UserDto userDto) {
         return ResponseEntity.ok().body(this.userService.login(userDto));

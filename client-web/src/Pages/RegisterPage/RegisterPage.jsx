@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './RegisterPage.module.css';
 import { useNavigate } from 'react-router';
 import { Signup } from '../../services/authService';
+import { UserContext } from '../../Context/UserContext';
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const RegisterPage = () => {
         confirmPassword: '',
         gender: ''
     });
+    const { updateUserContext, token } = useContext(UserContext);
     const navigate = useNavigate()
     const [error,setError] = useState(null)
     const handleChange = (e) => {
@@ -31,14 +33,25 @@ const RegisterPage = () => {
             }
 
             const response = await Signup(formData)
+            const userInfo = {
+                firstname: response.user_info.firstname,
+                lastname: response.user_info.lastname, 
+            };
+
+            localStorage.setItem('user_info', JSON.stringify(userInfo));
             localStorage.setItem('token', response.access_token)
+            updateUserContext()
             navigate('/')
         } catch(error) {
             setError("Signup failed")
         }         
     };
 
-
+    useEffect(() => {
+        if(token != null) {
+          navigate('/')
+        }
+    },[])
     return (
         <div className={styles.container}>
             <div className={styles.registerCard}>
