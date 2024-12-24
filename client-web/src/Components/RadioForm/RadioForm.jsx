@@ -87,7 +87,7 @@ function RadioForm({ formData, handleChange }) {
               <input
                 type="radio"
                 name="bootVersion"
-                value="3.4.2 (SNAPSHOT)"
+                value="3.4.2-SNAPSHOT"
                 checked={formData.bootVersion === "3.4.2-SNAPSHOT"}
                 onChange={handleChange}
               />
@@ -107,7 +107,7 @@ function RadioForm({ formData, handleChange }) {
               <input
                 type="radio"
                 name="bootVersion"
-                value="3.3.8 (SNAPSHOT)"
+                value="3.3.8-SNAPSHOT"
                 checked={formData.bootVersion === "3.3.8-SNAPSHOT"}
                 onChange={handleChange}
               />
