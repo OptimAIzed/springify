@@ -78,8 +78,8 @@ function HomePage({ theme }) {
             <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
             <PhotoDrop />
           </div>
-          <Footer theme={theme} onClick={generate} />
         </div>
+        <Footer theme={theme} onClick={generate} />
       </div>
     ) : (
       <div className={styles.errorMessage}>You must login</div>

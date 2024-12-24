@@ -44,7 +44,7 @@
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
 }
 
-label {
+.container label {
     display: flex;
     margin-bottom: 5px;
     font-weight: bold;
