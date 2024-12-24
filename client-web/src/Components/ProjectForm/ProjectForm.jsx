@@ -1,25 +1,6 @@
-import { useState } from "react";
 import styles from "./ProjectForm.module.css";
 
-function ProjectForm() {
-  const [formData, setFormData] = useState({
-    group: "com.example",
-    artifact: "demo",
-    name: "demo",
-    description: "Demo project for Spring Boot",
-    packageName: "com.example.demo",
-    packaging: "Jar",
-    javaVersion: "17",
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
+function ProjectForm({ formData, handleChange, setField }) {
   return (
     <div className={styles.container}>
       <form className={styles.form}>
@@ -29,9 +10,9 @@ function ProjectForm() {
           <label>Group</label>
           <input
             type="text"
-            name="group"
-            value={formData.group}
-            onChange={handleChange}
+            name="groupId"
+            value={formData.groupId}
+            onChange={(event) => { handleChange(event); setField("packageName", `${event.target.value}.${formData.artifactId}`); }}
             className={styles.input}
           />
         </div>
@@ -39,9 +20,9 @@ function ProjectForm() {
           <label>Artifact</label>
           <input
             type="text"
-            name="artifact"
-            value={formData.artifact}
-            onChange={handleChange}
+            name="artifactId"
+            value={formData.artifactId}
+            onChange={(event) => { handleChange(event); setField("name", event.target.value); setField("packageName", `${formData.groupId}.${event.target.value}`); setField("baseDir", event.target.value); }}
             className={styles.input}
           />
         </div>
@@ -84,8 +65,8 @@ function ProjectForm() {
               <input
                 type="radio"
                 name="packaging"
-                value="Jar"
-                checked={formData.packaging === "Jar"}
+                value="jar"
+                checked={formData.packaging === "jar"}
                 onChange={handleChange}
               />
               Jar
@@ -94,8 +75,8 @@ function ProjectForm() {
               <input
                 type="radio"
                 name="packaging"
-                value="War"
-                checked={formData.packaging === "War"}
+                value="war"
+                checked={formData.packaging === "war"}
                 onChange={handleChange}
               />
               War
@@ -111,39 +92,34 @@ function ProjectForm() {
               <input
                 type="radio"
                 name="javaVersion"
+                value="23"
+                checked={formData.javaVersion === "23"}
+                onChange={handleChange}
+              />
+              23
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="javaVersion"
+                value="21"
+                checked={formData.javaVersion === "21"}
+                onChange={handleChange}
+              />
+              21
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="javaVersion"
                 value="17"
                 checked={formData.javaVersion === "17"}
                 onChange={handleChange}
               />
               17
             </label>
-            <label>
-              <input
-                type="radio"
-                name="javaVersion"
-                value="11"
-                checked={formData.javaVersion === "11"}
-                onChange={handleChange}
-              />
-              11
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="javaVersion"
-                value="8"
-                checked={formData.javaVersion === "8"}
-                onChange={handleChange}
-              />
-              8
-            </label>
           </div>
         </div>
-
-        {/* Submit Button 
-        <button type="submit" className={styles.submitButton}>
-          Generate Project
-        </button>*/}
       </form>
     </div>
   );

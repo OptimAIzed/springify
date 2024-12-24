@@ -1,23 +1,7 @@
 import { useState } from "react";
 import styles from "./RadioForm.module.css";
 
-function RadioForm() {
-  const [projectType, setProjectType] = useState("");
-  const [language, setLanguage] = useState("");
-  const [springBootVersion, setSpringBootVersion] = useState("");
-
-  const handleProjectTypeChange = (event) => {
-    setProjectType(event.target.value);
-  };
-
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-  };
-
-  const handleSpringBootVersionChange = (event) => {
-    setSpringBootVersion(event.target.value);
-  };
-
+function RadioForm({ formData, handleChange }) {
   return (
     <div className={styles.container}>
       <div className={styles.row}>
@@ -28,30 +12,30 @@ function RadioForm() {
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="projectType"
-                value="Gradle - Groovy"
-                checked={projectType === "Gradle - Groovy"}
-                onChange={handleProjectTypeChange}
+                name="type"
+                value="gradle-project"
+                checked={formData.type === "gradle-project"}
+                onChange={handleChange}
               />
               <span>Gradle - Groovy</span>
             </label>
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="projectType"
-                value="Gradle - Kotlin"
-                checked={projectType === "Gradle - Kotlin"}
-                onChange={handleProjectTypeChange}
+                name="type"
+                value="gradle-project-kotlin"
+                checked={formData.type === "gradle-project-kotlin"}
+                onChange={handleChange}
               />
               <span>Gradle - Kotlin</span>
             </label>
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="projectType"
-                value="Maven"
-                checked={projectType === "Maven"}
-                onChange={handleProjectTypeChange}
+                name="type"
+                value="maven-project"
+                checked={formData.type === "maven-project"}
+                onChange={handleChange}
               />
               <span>Maven</span>
             </label>
@@ -66,9 +50,9 @@ function RadioForm() {
               <input
                 type="radio"
                 name="language"
-                value="Java"
-                checked={language === "Java"}
-                onChange={handleLanguageChange}
+                value="java"
+                checked={formData.language === "java"}
+                onChange={handleChange}
               />
               <span>Java</span>
             </label>
@@ -76,9 +60,9 @@ function RadioForm() {
               <input
                 type="radio"
                 name="language"
-                value="Kotlin"
-                checked={language === "Kotlin"}
-                onChange={handleLanguageChange}
+                value="kotlin"
+                checked={formData.language === "kotlin"}
+                onChange={handleChange}
               />
               <span>Kotlin</span>
             </label>
@@ -86,9 +70,9 @@ function RadioForm() {
               <input
                 type="radio"
                 name="language"
-                value="Groovy"
-                checked={language === "Groovy"}
-                onChange={handleLanguageChange}
+                value="groovy"
+                checked={formData.language === "groovy"}
+                onChange={handleChange}
               />
               <span>Groovy</span>
             </label>
@@ -102,42 +86,42 @@ function RadioForm() {
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="springBootVersion"
-                value="3.4.1 (SNAPSHOT)"
-                checked={springBootVersion === "3.4.1 (SNAPSHOT)"}
-                onChange={handleSpringBootVersionChange}
+                name="bootVersion"
+                value="3.4.2 (SNAPSHOT)"
+                checked={formData.bootVersion === "3.4.2-SNAPSHOT"}
+                onChange={handleChange}
               />
-              <span>3.4.1 (SNAPSHOT)</span>
+              <span>3.4.2 (SNAPSHOT)</span>
             </label>
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="springBootVersion"
-                value="3.4.0"
-                checked={springBootVersion === "3.4.0"}
-                onChange={handleSpringBootVersionChange}
+                name="bootVersion"
+                value="3.4.1"
+                checked={formData.bootVersion === "3.4.1"}
+                onChange={handleChange}
               />
-              <span>3.4.0</span>
+              <span>3.4.1</span>
             </label>
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="springBootVersion"
-                value="3.3.7 (SNAPSHOT)"
-                checked={springBootVersion === "3.3.7 (SNAPSHOT)"}
-                onChange={handleSpringBootVersionChange}
+                name="bootVersion"
+                value="3.3.8 (SNAPSHOT)"
+                checked={formData.bootVersion === "3.3.8-SNAPSHOT"}
+                onChange={handleChange}
               />
-              <span>3.3.7 (SNAPSHOT)</span>
+              <span>3.3.8 (SNAPSHOT)</span>
             </label>
             <label className={styles.radioOption}>
               <input
                 type="radio"
-                name="springBootVersion"
-                value="3.3.6"
-                checked={springBootVersion === "3.3.6"}
-                onChange={handleSpringBootVersionChange}
+                name="bootVersion"
+                value="3.3.7"
+                checked={formData.bootVersion === "3.3.7"}
+                onChange={handleChange}
               />
-              <span>3.3.6</span>
+              <span>3.3.7</span>
             </label>
           </div>
         </div>

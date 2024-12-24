@@ -1,4 +1,42 @@
 .container {
-    /* Example */
-    color: red;
+  height: calc(100% - 50px);
+  width: 100%;
+}
+
+.searchBar {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--input-text-color);
+  background-color: var(--secondary-color);
+  width: 100%;
+  padding: 16px;
+  border: 0;
+}
+
+.listContainer {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.listItem {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.listItem:hover {
+  color: #fff;
+  background-color: #4CAF50;
+}
+
+.listItem p {
+  margin-top: 8px;
 }

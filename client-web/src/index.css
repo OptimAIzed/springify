@@ -49,10 +49,11 @@ button {
 /* Light Theme */
 .light {
   --background-color: #ffffff;
+  --transparent-background-color: #ecf2f2e0;
   --text-color: #333333;
   --border-color: #e0e8e8;
-  --primary-color: #6db33f;
-  --secondary-color: #ecf2f2;
+  --primary-color: #6cb43d;
+  --secondary-color: #fff;
   --button-bg: #ffffff;
   --button-border: #1b1f23;
   --button-text-color: #000;
@@ -63,10 +64,11 @@ button {
 
 .dark {
   --background-color: #1b1f23;
+  --transparent-background-color: #1b1f23e0;
   --text-color: #ffffff;
   --border-color: #515353;
-  --primary-color: #6db33f;
-  --secondary-color: #2b2f32;
+  --primary-color: #6cb43d;
+  --secondary-color: #262a2d;
   --button-bg: #1b1f23;
   --button-border: #ffffff;
   --button-text-color: #fff;
@@ -176,6 +178,24 @@ input:focus {}
   background-color: var(--secondary-color);
   color: var(--text-color);
   font-size: 14px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color);
 }
 
 /* Media Queries */
