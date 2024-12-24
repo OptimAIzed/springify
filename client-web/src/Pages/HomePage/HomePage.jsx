@@ -7,10 +7,14 @@ import RadioForm from "../../Components/RadioForm/RadioForm";
 import DependencyPage from '../../Pages/DependencyPage/DependencyPage';
 import PhotoDrop from "../../Components/PhotoDrop/PhotoDrop";
 import ProjectForm from "../../Components/ProjectForm/ProjectForm";
-
-//components
+import { UserContext } from "../../Context/UserContext";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function HomePage({ theme }) {
+  const { token } = useContext(UserContext);
+  const navigate = useNavigate()
+
   const [dependencies, setDependencies] = useState([]);
   const [formData, setFormData] = useState({
     groupId: "com.example",
@@ -55,21 +59,31 @@ function HomePage({ theme }) {
     document.body.removeChild(a);
   }
 
+  useEffect(() => {
+    if (token == null) {
+      navigate('/login')
+    }
+  }, [])
+
   return (
-    <div className={styles.container}>
-      <Header theme={theme} />
-      <div className={styles.content}>
-        <div className={styles.leftColumn}>
-          <RadioForm formData={formData} handleChange={handleChange} />
-          <ProjectForm formData={formData} handleChange={handleChange} setField={setField} />
-        </div>
-        <div className={styles.rightColumn}>
-          <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
-          <PhotoDrop />
+    token != null ? (
+      <div className={styles.container}>
+        <Header theme={theme} />
+        <div className={styles.content}>
+          <div className={styles.leftColumn}>
+            <RadioForm formData={formData} handleChange={handleChange} />
+            <ProjectForm formData={formData} handleChange={handleChange} setField={setField} />
+          </div>
+          <div className={styles.rightColumn}>
+            <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
+            <PhotoDrop />
+          </div>
+          <Footer theme={theme} onClick={generate} />
         </div>
       </div>
-      <Footer theme={theme} onClick={generate} />
-    </div>
+    ) : (
+      <div className={styles.errorMessage}>You must login</div>
+    )
   );
 }
 

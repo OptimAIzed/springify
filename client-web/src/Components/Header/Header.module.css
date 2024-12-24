@@ -16,3 +16,18 @@
   width: calc(100% - 70px);
   margin: 0 auto;
 }
+
+.button {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-right: 14px;
+  margin-top: 10px;
+  color: white;
+}
+
+.greetings {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 4px;
+}

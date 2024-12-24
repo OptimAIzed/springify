@@ -12,7 +12,6 @@ import LeftPanel from './Components/LeftPanel/LeftPanel';
 function App() {
   const [theme, setTheme] = useState("light");
   const [history, setHistory] = useState(false);
-
   return (
     <div className={`${styles.container} ${theme == 'light' ? "light" : "dark"}`}>
       <div className={styles.left}>
