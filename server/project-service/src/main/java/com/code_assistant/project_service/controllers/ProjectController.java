@@ -4,6 +4,7 @@ import com.code_assistant.project_service.dto.ProjectDto;
 import com.code_assistant.project_service.entities.Project;
 import com.code_assistant.project_service.entities.User;
 import com.code_assistant.project_service.repositories.ProjectRepository;
+import com.code_assistant.project_service.services.AIService;
 import com.code_assistant.project_service.services.interfaces.ProjectService;
 import com.code_assistant.project_service.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,7 +21,8 @@ public class ProjectController {
 
     @Autowired
     private ProjectRepository projectRepository;
-
+    @Autowired
+    private AIService aiService;
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -51,7 +54,11 @@ public class ProjectController {
                     .body(null);
         }
     }
+    @PostMapping("gemini")
+    public String communicateWithAi(@RequestBody String userInput) {
 
+        return aiService.chat(userInput);
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Project>> findByUser(@PathVariable Long id) {
         try {
