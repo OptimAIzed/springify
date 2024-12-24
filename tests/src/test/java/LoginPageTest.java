@@ -28,7 +28,7 @@ public class LoginPageTest {
     @AfterEach
     void tearDown() {
         if (driver != null) {
-            driver.quit(); // Close the browser after each test
+            driver.quit();
         }
     }
 
