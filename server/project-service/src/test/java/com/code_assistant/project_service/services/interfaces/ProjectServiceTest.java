@@ -32,18 +32,18 @@ class ProjectServiceTest {
         Project project = new Project();
         project.setId(1L);
         project.setUserId(1L);
-        project.setArtifact("com.example.demo");
+        project.setArtifactId("com.example.demo");
         project.setDescription("demo project");
-        project.setGroupName("group demo");
+        project.setGroupId("group demo");
 
         when(projectRepository.findById(1L)).thenReturn(Optional.of(project));
 
         ProjectDto result = projectService.findProjectById(1L);
 
         assertEquals(1L, result.getId());
-        assertEquals("com.example.demo", result.getArtifact());
+        assertEquals("com.example.demo", result.getArtifactId());
         assertEquals("demo project", result.getDescription());
-        assertEquals("group demo", result.getGroupName());
+        assertEquals("group demo", result.getGroupId());
     }
     @Test
     public void TestFindProjectsByUserId() {
@@ -62,9 +62,9 @@ class ProjectServiceTest {
     @Test
     public void testSaveProject() {
         ProjectDto projectDto = new ProjectDto();
-        projectDto.setArtifact("com.example.demo");
+        projectDto.setArtifactId("com.example.demo");
         projectDto.setDescription("Demo Project");
-        projectDto.setGroupName("Demo Group");
+        projectDto.setGroupId("Demo Group");
 
         when(projectRepository.save(ProjectMapper.map(projectDto))).thenReturn(ProjectMapper.map(projectDto));
 
@@ -73,9 +73,9 @@ class ProjectServiceTest {
         verify(projectRepository, times(1)).save(ProjectMapper.map(projectDto));
 
         assertNotNull(savedProjectDto, "Saved project should not be null.");
-        assertEquals("com.example.demo", savedProjectDto.getArtifact());
+        assertEquals("com.example.demo", savedProjectDto.getArtifactId());
         assertEquals("Demo Project", savedProjectDto.getDescription());
-        assertEquals("Demo Group", savedProjectDto.getGroupName());
+        assertEquals("Demo Group", savedProjectDto.getGroupId());
     }
 
 }

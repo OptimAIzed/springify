@@ -29,7 +29,6 @@ public class ProjectController {
         try {
             Project project = projectRepository.findById(id).orElse(null);
             if (project != null) {
-                System.out.println("this is the project : " + project.getUserId());
                 User user = userService.userById(project.getUserId());
                 project.setUserfield(user);
                 return ResponseEntity.ok(project);
@@ -58,7 +57,6 @@ public class ProjectController {
         try {
             User user = userService.userById(id);
             if (user != null) {
-                System.out.println("getting the user : " + user.getPrenom() + user.getId());
                 List<Project> projects = projectRepository.findByUserId(id);
                 return ResponseEntity.ok(projects);
             } else {

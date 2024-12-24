@@ -14,6 +14,5 @@ public interface UserService {
 	UserDto update(final UserDto CustomerDto);
  	void deleteById(final Long id);
 	boolean existsById(final Long id);
-	 AuthenticationResponse refreshToken( String refreshToken);
 }
 
