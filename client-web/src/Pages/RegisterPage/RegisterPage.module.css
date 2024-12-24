@@ -26,7 +26,8 @@
     margin-bottom: 20px;
 }
 
-.inputField, .selectField {
+.inputField,
+.selectField {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -36,9 +37,10 @@
     box-sizing: border-box;
 }
 
-.inputField:focus, .selectField:focus {
+.inputField:focus,
+.selectField:focus {
     outline: none;
-    border-color: #4caf50;
+    border-color: var(--primary-text-color);
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
 }
 
@@ -52,7 +54,8 @@ label {
 .submitBtn {
     width: 100%;
     padding: 12px;
-    background-color: #4caf50;
+    margin-bottom: 10px;
+    background-color: var(--primary-text-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -76,13 +79,19 @@ label {
     text-align: center;
 }
 
+.alreadyLink {
+    color: var(--primary-text-color);
+}
+
 /* Responsive */
 @media (max-width: 500px) {
     .registerCard {
         padding: 20px;
     }
 
-    .inputField, .selectField, .submitBtn {
+    .inputField,
+    .selectField,
+    .submitBtn {
         font-size: 14px;
     }
 }

@@ -15,7 +15,7 @@ const RegisterPage = () => {
     });
     const { updateUserContext, token } = useContext(UserContext);
     const navigate = useNavigate()
-    const [error,setError] = useState(null)
+    const [error, setError] = useState(null)
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -27,7 +27,7 @@ const RegisterPage = () => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            if(formData.password !== formData.confirmPassword) {
+            if (formData.password !== formData.confirmPassword) {
                 alert("Passwords do not match");
                 return;
             }
@@ -35,29 +35,29 @@ const RegisterPage = () => {
             const response = await Signup(formData)
             const userInfo = {
                 firstname: response.user_info.firstname,
-                lastname: response.user_info.lastname, 
+                lastname: response.user_info.lastname,
             };
 
             localStorage.setItem('user_info', JSON.stringify(userInfo));
             localStorage.setItem('token', response.access_token)
             updateUserContext()
             navigate('/')
-        } catch(error) {
+        } catch (error) {
             setError("Signup failed")
-        }         
+        }
     };
 
     useEffect(() => {
-        if(token != null) {
-          navigate('/')
+        if (token != null) {
+            navigate('/')
         }
-    },[])
+    }, [])
     return (
         <div className={styles.container}>
             <div className={styles.registerCard}>
                 <h2 className={styles.registerTitle}>Register</h2>
                 <form onSubmit={handleSubmit}>
-                    {error &&  <div className={styles.errorMessage}>{error}</div>}
+                    {error && <div className={styles.errorMessage}>{error}</div>}
                     <div>
                         <label>First Name:</label>
                         <input
@@ -128,6 +128,7 @@ const RegisterPage = () => {
                         </select>
                     </div>
                     <button type="submit" className={styles.submitBtn}>Register</button>
+                    <a className={styles.alreadyLink} href="/login">Already a member ?</a>
                 </form>
             </div>
         </div>

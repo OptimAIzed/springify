@@ -7,37 +7,37 @@ const AuthPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const {updateUserContext,token} = useContext(UserContext);
+    const { updateUserContext, token } = useContext(UserContext);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(token != null) {
-          navigate('/')
+        if (token != null) {
+            navigate('/')
         }
-    },[])
+    }, [])
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
             const response = await login(email, password);
             console.log(response);
-    
+
             localStorage.setItem('token', response.access_token);
-    
+
             const userInfo = {
                 firstname: response.user_info.firstname,
-                lastname: response.user_info.lastname, 
+                lastname: response.user_info.lastname,
             };
             localStorage.setItem('user_info', JSON.stringify(userInfo));
             updateUserContext();
-            navigate('/');  
-    
+            navigate('/');
+
         } catch (error) {
             setError("Login failed");
         }
     };
-    
-    
+
+
     return (
         <div className={styles.authPage}>
             <form onSubmit={handleSubmit} className={styles.loginForm}>
@@ -63,7 +63,7 @@ const AuthPage = () => {
                     />
                 </div>
                 <button type="submit" className={styles.submitButton}>Login</button>
-                <a className={styles.alreadyLink} href="/register">Already a member ? </a>
+                <a className={styles.alreadyLink} href="/register">Not a member ?</a>
             </form>
         </div>
     );

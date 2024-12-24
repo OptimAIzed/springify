@@ -40,14 +40,14 @@ input[type="password"] {
 
 input[type="email"]:focus,
 input[type="password"]:focus {
-    border-color: #007bff;
+    border-color: var(--primary-text-color);
     outline: none;
-    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
 }
 
 .submitButton {
     width: 100%;
     padding: 12px;
+    margin-bottom: 10px;
     background-color: var(--primary-text-color);
     color: #ffffff;
     font-size: 16px;
@@ -58,9 +58,12 @@ input[type="password"]:focus {
     transition: background-color 0.3s ease;
 }
 
+.submitButton:hover {
+    background-color: #45a049;
+}
 
 .submitButton:active {
-    background-color: #004085;
+    background-color: #388e3c;
 }
 
 .errorMessage {
