@@ -1,0 +1,108 @@
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 1.2em;
+  color: var(--text-color);
+}
+
+.addButton {
+  padding: 8px 16px;
+  font-size: 0.9em;
+  font-weight: bold;
+  border: 2px solid var(--button-border);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+}
+
+.addButton:hover {
+  background-color: var(--button-text-color);
+  color: var(--button-bg);
+}
+
+.divider {
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0;
+
+}
+
+.selectedDependencies {
+  height: 30vh;
+  overflow-y: auto;
+}
+
+.noDependency {
+  font-style: italic;
+  color: #666;
+}
+
+.selectedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selectedItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.itemContent {
+  flex-grow: 1;
+}
+
+.category {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 0.8em;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  width: 100vw;
+  height: 100vh;
+  background: var(--transparent-background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dependenciesContainer {
+  background-color: var(--secondary-color);
+  max-width: 800px;
+  height: calc(100% - 100px);
+  width: 100%;
+}

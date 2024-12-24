@@ -1,0 +1,54 @@
+.container {
+  margin: 20px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.row>div h4 {
+  margin-bottom: 15px;
+}
+
+.row>div {
+  flex: 1 1 calc(50% - 20px);
+  min-width: 200px;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+
+.radioGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.radioOption input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.radioOption input[type="radio"]:checked {
+  accent-color: var(--primary-text-color);
+}
+
+.radioOption span {
+  flex-shrink: 0;
+  white-space: nowrap;
+}

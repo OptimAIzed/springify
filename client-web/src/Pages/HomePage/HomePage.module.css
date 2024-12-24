@@ -1,0 +1,22 @@
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-bottom: 92px;
+}
+
+.leftColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  /* Fine vertical line */
+  padding-right: 20px;
+  /* Adjust padding to create space around the line */
+}
+
+.rightColumn {
+  flex: 1;
+  padding-left: 20px;
+}

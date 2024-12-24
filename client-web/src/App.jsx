@@ -1,76 +1,33 @@
 import { useState } from 'react';
-import './App.css';
+import styles from './App.module.css';
+import ThemeToggle from './Components/ThemeToggle/ThemeToggle';
+
+//Components
+import HomePage from "./Pages/HomePage/HomePage";
+import HistoryPage from './Pages/HistoryPage/HistoryPage';
+
+//Images
+import LeftPanel from './Components/LeftPanel/LeftPanel';
 
 function App() {
-  const [projectDetails, setProjectDetails] = useState({
-    language: 'Java',
-    framework: 'Spring Boot',
-    dependencies: []
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProjectDetails({ ...projectDetails, [name]: value });
-  };
-
-  const handleAddDependency = () => {
-    setProjectDetails({
-      ...projectDetails,
-      dependencies: [...projectDetails.dependencies, 'New Dependency']
-    });
-  };
-
-  const handleGenerate = () => {
-    alert('Project generated with details: ' + JSON.stringify(projectDetails));
-  };
-
+  const [theme, setTheme] = useState("light");
+  const [history, setHistory] = useState(false);
   return (
-    <div className="app">
-      <header className="header">
-        <h1>Spring Project Generator</h1>
-        <p>Create a Spring Boot project with ease</p>
-      </header>
-
-      <main className="container">
-        <section className="form-section">
-          <h2>Project Configuration</h2>
-
-          <div className="form-group">
-            <label htmlFor="language">Language</label>
-            <select name="language" value={projectDetails.language} onChange={handleChange}>
-              <option value="Java">Java</option>
-              <option value="Kotlin">Kotlin</option>
-              <option value="Groovy">Groovy</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="framework">Framework</label>
-            <select name="framework" value={projectDetails.framework} onChange={handleChange}>
-              <option value="Spring Boot">Spring Boot</option>
-              <option value="Spring MVC">Spring MVC</option>
-            </select>
-          </div>
-
-          <button className="btn-add" onClick={handleAddDependency}>
-            Add Dependency
-          </button>
-
-          <ul className="dependency-list">
-            {projectDetails.dependencies.map((dep, index) => (
-              <li key={index}>{dep}</li>
-            ))}
-          </ul>
-
-          <button className="btn-generate" onClick={handleGenerate}>
-            Generate Project
-          </button>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <p>© 2024 SpringifyUML. All Rights Reserved.</p>
-      </footer>
+    <div className={`${styles.container} ${theme == 'light' ? "light" : "dark"}`}>
+      <div className={styles.left}>
+        <div className={styles.content}>
+          <LeftPanel theme={theme} history={history} setHistory={setHistory} />
+        </div>
+      </div>
+      <div className={styles.center}>
+        <HomePage theme={theme} />
+        {history && <HistoryPage theme={theme} closeAction={setHistory} />}
+      </div>
+      <div className={styles.right}>
+        <div className={styles.content}>
+          <ThemeToggle theme={theme} toggle={setTheme} />
+        </div>
+      </div>
     </div>
   );
 }
