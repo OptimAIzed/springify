@@ -8,12 +8,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import java.time.Duration;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-
 
 public class RegisterPageTest {
 
@@ -22,7 +20,6 @@ public class RegisterPageTest {
 
     @BeforeEach
     void setUp() {
-        // Setup WebDriverManager for Chrome
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -32,7 +29,7 @@ public class RegisterPageTest {
     @AfterEach
     void tearDown() {
         if (driver != null) {
-            driver.quit(); // Close the browser after each test
+            driver.quit();
         }
     }
 
@@ -63,7 +60,6 @@ public class RegisterPageTest {
 
         // Submit the form
         registerButton.click();
-
         assertTrue(driver.getCurrentUrl().contains(""), "Registration failed, redirection does not contain '' ");
     }
 
@@ -109,14 +105,11 @@ public class RegisterPageTest {
         Select genderSelect = new Select(genderDropdown);
         genderSelect.selectByValue("male");
 
-        // Submit the form
         registerButton.click();
-
 
         // Wait for the validation message to appear on the focused element.
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input:invalid")));
-
 
         // Execute JavaScript to get the browser validation message
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -150,14 +143,11 @@ public class RegisterPageTest {
         Select genderSelect = new Select(genderDropdown);
         genderSelect.selectByValue("male");
 
-        // Submit the form
         registerButton.click();
 
         // Wait for the alert to be present
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-
-        // Get the text of the alert message
         String alertText = alert.getText();
 
         // Assert the alert text

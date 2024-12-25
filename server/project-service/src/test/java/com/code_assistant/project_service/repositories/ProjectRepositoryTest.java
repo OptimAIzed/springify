@@ -22,14 +22,15 @@ class ProjectRepositoryTest {
     User user;
     @BeforeEach
     public void setup() {
+        projectRepository.deleteAll();
         user = new User();
         user.setNom("ouabiba");
         user.setPrenom("hamza");
         user.setId(1L);
         project = new Project();
-        project.setNom("p1");
-        project.setArtifact("artifact");
-        project.setGroupName("g1");
+        project.setName("p1");
+        project.setArtifactId("artifact");
+        project.setGroupId("g1");
         project.setDescription("desc");
         project.setUserId(user.getId());
         projectRepository.save(project);
@@ -38,17 +39,17 @@ class ProjectRepositoryTest {
     @Test
     public void testSaveProject() {
         Project newProject = new Project();
-        newProject.setNom("p2");
-        newProject.setArtifact("artifact2");
-        newProject.setGroupName("g2");
+        newProject.setName("p2");
+        newProject.setArtifactId("artifact2");
+        newProject.setGroupId("g2");
         newProject.setDescription("desc2");
 
         Project savedProject = projectRepository.save(newProject);
 
         assertNotNull(savedProject.getId(), "Le projet doit avoir un ID généré après la sauvegarde.");
-        assertEquals("p2", savedProject.getNom(), "Le nom du projet doit être 'p2'.");
-        assertEquals("artifact2", savedProject.getArtifact(), "L'artefact du projet doit être 'artifact2'.");
-        assertEquals("g2", savedProject.getGroupName(), "Le groupe du projet doit être 'g2'.");
+        assertEquals("p2", savedProject.getName(), "Le nom du projet doit être 'p2'.");
+        assertEquals("artifact2", savedProject.getArtifactId(), "L'artefact du projet doit être 'artifact2'.");
+        assertEquals("g2", savedProject.getGroupId(), "Le groupe du projet doit être 'g2'.");
         assertEquals("desc2", savedProject.getDescription(), "La description du projet doit être 'desc2'.");
     }
 
@@ -59,16 +60,16 @@ class ProjectRepositoryTest {
         assertNotNull(projectList, "La liste des projets ne doit pas être nulle.");
         assertFalse(projectList.isEmpty(), "La liste des projets ne doit pas être vide.");
         assertEquals(1, projectList.size(), "Il doit y avoir un projet dans la base de données.");
-        assertEquals("p1", projectList.get(0).getNom(), "Le nom du projet récupéré doit être 'p1'.");
+        assertEquals("p1", projectList.get(0).getName(), "Le nom du projet récupéré doit être 'p1'.");
     }
     @Test
     public void testFindByIdProject() {
         projectRepository.deleteAll();
 
         Project project = new Project();
-        project.setNom("p3");
-        project.setArtifact("artifact");
-        project.setGroupName("g3");
+        project.setName("p3");
+        project.setArtifactId("artifact");
+        project.setGroupId("g3");
         project.setDescription("desc");
 
         Project savedProject = projectRepository.save(project);
@@ -77,9 +78,9 @@ class ProjectRepositoryTest {
         Optional<Project> foundProject = projectRepository.findById(projectId);
 
         assertTrue(foundProject.isPresent(), "Le projet doit être trouvé par son ID.");
-        assertEquals("p3", foundProject.get().getNom(), "Le nom du projet doit être 'p1'.");
-        assertEquals("artifact", foundProject.get().getArtifact(), "L'artefact doit être 'artifact'.");
-        assertEquals("g3", foundProject.get().getGroupName(), "Le groupe doit être 'g1'.");
+        assertEquals("p3", foundProject.get().getName(), "Le nom du projet doit être 'p1'.");
+        assertEquals("artifact", foundProject.get().getArtifactId(), "L'artefact doit être 'artifact'.");
+        assertEquals("g3", foundProject.get().getGroupId(), "Le groupe doit être 'g1'.");
         assertEquals("desc", foundProject.get().getDescription(), "La description doit être 'desc'.");
     }
     @Test
@@ -90,6 +91,6 @@ class ProjectRepositoryTest {
         assertNotNull(projectList, "La liste des projets ne doit pas être nulle.");
         assertFalse(projectList.isEmpty(), "La liste des projets ne doit pas être vide.");
         assertEquals(1, projectList.size(), "Il doit y avoir un projet dans la base de données.");
-        assertEquals("p1", projectList.get(0).getNom(), "Le nom du projet récupéré doit être 'p1'.");
+        assertEquals("p1", projectList.get(0).getName(), "Le nom du projet récupéré doit être 'p1'.");
     }
 }

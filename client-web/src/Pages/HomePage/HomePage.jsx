@@ -1,6 +1,6 @@
 import styles from "./HomePage.module.css";
 import { useState } from "react";
-
+import axios from "axios";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import RadioForm from "../../Components/RadioForm/RadioForm";
@@ -47,17 +47,35 @@ function HomePage({ theme }) {
   };
 
   const generate = () => {
-    const baseUrl = "https://start.spring.io/starter.zip";
+    const baseUrl = "http://localhost:8888/api/projects/generate";
     const queryString = new URLSearchParams(formData).toString();
     const fullUrl = `${baseUrl}?${queryString}${dependencies.join(',')}`;
 
-    const a = document.createElement("a");
-    a.href = fullUrl;
-    a.download = "spring-boot-project.zip";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    axios.get(fullUrl, { headers, responseType: 'blob' })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'application/zip' });
+        const downloadUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = `${formData.baseDir}.zip`;
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        URL.revokeObjectURL(downloadUrl);
+      })
+      .catch(error => {
+        console.error('Error downloading the zip file:', error);
+      });
+  };
+
 
   useEffect(() => {
     if (token == null) {
