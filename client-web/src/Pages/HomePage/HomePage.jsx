@@ -7,14 +7,16 @@ import RadioForm from "../../Components/RadioForm/RadioForm";
 import DependencyPage from '../../Pages/DependencyPage/DependencyPage';
 import PhotoDrop from "../../Components/PhotoDrop/PhotoDrop";
 import ProjectForm from "../../Components/ProjectForm/ProjectForm";
+import Loading from "../../Components/Loading/Loading";
 import { UserContext } from "../../Context/UserContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 function HomePage({ theme }) {
+  const [loading, setLoading] = useState(false);
   const { token } = useContext(UserContext);
   const navigate = useNavigate()
-
+  const [image, setImage] = useState(null);
   const [dependencies, setDependencies] = useState([]);
   const [formData, setFormData] = useState({
     groupId: "com.example",
@@ -29,6 +31,7 @@ function HomePage({ theme }) {
     bootVersion: "3.4.1",
     baseDir: "demo",
     dependencies: "",
+    image: ""
   });
 
   const setField = (key, value) => {
@@ -46,19 +49,40 @@ function HomePage({ theme }) {
     }));
   };
 
+
   const generate = () => {
     const baseUrl = "http://localhost:8888/api/projects/generate";
-    const queryString = new URLSearchParams(formData).toString();
-    const fullUrl = `${baseUrl}?${queryString}${dependencies.join(',')}`;
 
     const token = localStorage.getItem('token');
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    if (!image) {
+      alert("Please upload a UML class diagram image");
+      return;
+    }
 
-    axios.get(fullUrl, { headers, responseType: 'blob' })
+    setLoading(true);
+
+    const multipartData = new FormData();
+    Object.keys(formData).forEach(key => {
+      if (key !== "dependencies" && key !== "image")
+        multipartData.append(key, formData[key]);
+    });
+
+    if (dependencies && dependencies.length > 0) {
+      multipartData.append('dependencies', dependencies.join(','));
+    }
+
+    multipartData.append('image', image);
+
+    axios.post(baseUrl, multipartData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      responseType: 'blob',
+    })
       .then(response => {
+
         const blob = new Blob([response.data], { type: 'application/zip' });
         const downloadUrl = URL.createObjectURL(blob);
 
@@ -73,8 +97,11 @@ function HomePage({ theme }) {
       })
       .catch(error => {
         console.error('Error downloading the zip file:', error);
+      }).finally(() => {
+        setLoading(false);
       });
   };
+
 
 
   useEffect(() => {
@@ -94,10 +121,13 @@ function HomePage({ theme }) {
           </div>
           <div className={styles.rightColumn}>
             <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
-            <PhotoDrop />
+            <PhotoDrop setImage={setImage} image={image} />
           </div>
         </div>
         <Footer theme={theme} onClick={generate} />
+        {
+          loading && <Loading />
+        }
       </div>
     ) : (
       <div className={styles.errorMessage}>You must login</div>

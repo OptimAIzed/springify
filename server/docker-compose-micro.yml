@@ -1,0 +1,91 @@
+services:
+  springify-discovery-service:
+    container_name: springify-discovery-service
+    build: ./discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  springify-user-service:
+    container_name: springify-user-service
+    build: ./user-service
+    ports:
+      - '8088:8088'
+    expose:
+      - '8088'
+    environment:
+      - DISCOVERY_SERVICE=http://springify-discovery-service:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db-user:3306/user_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    depends_on:
+      springify-discovery-service:
+        condition: service_healthy
+      mysql-db-user:
+        condition: service_healthy
+
+  springify-project-service:
+    container_name: springify-project-service
+    build: ./project-service
+    ports:
+      - '8089:8089'
+    expose:
+      - '8089'
+    environment:
+      - DISCOVERY_SERVICE=http://springify-discovery-service:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db-project:3306/project_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+    depends_on:
+      springify-discovery-service:
+        condition: service_healthy
+      mysql-db-user:
+        condition: service_healthy
+      mysql-db-project:
+        condition: service_healthy
+
+  mysql-db-user:
+    container_name: mysql-db-user
+    image: mysql:8.0
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: springify
+      MYSQL_PASSWORD: springifypassword
+    volumes:
+      - mysql-data-user:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  mysql-db-project:
+    container_name: mysql-db-project
+    image: mysql:8.0
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: project_db
+      MYSQL_USER: springify
+      MYSQL_PASSWORD: springifypassword
+    volumes:
+      - mysql-data-project:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql-data-user:
+  mysql-data-project:
