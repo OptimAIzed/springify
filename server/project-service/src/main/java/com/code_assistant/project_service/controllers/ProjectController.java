@@ -7,13 +7,13 @@ import com.code_assistant.project_service.repositories.ProjectRepository;
 import com.code_assistant.project_service.services.AIService;
 import com.code_assistant.project_service.services.interfaces.ProjectService;
 import com.code_assistant.project_service.services.interfaces.UserService;
-import io.jsonwebtoken.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -21,7 +21,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.net.URI;
 
@@ -88,7 +90,7 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.projectService.save(projectDto));
     }
 
-    @GetMapping("/generate")
+    @PostMapping(value = "/generate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> generateProject(
             @RequestParam(value = "groupId", defaultValue = "com.example") String groupId,
             @RequestParam(value = "artifactId", defaultValue = "demo") String artifactId,
@@ -101,12 +103,20 @@ public class ProjectController {
             @RequestParam(value = "language", defaultValue = "java") String language,
             @RequestParam(value = "bootVersion", defaultValue = "3.4.1") String bootVersion,
             @RequestParam(value = "baseDir", defaultValue = "demo") String baseDir,
-            @RequestParam(value = "dependencies", required = false) String dependencies
-    ) throws IOException, java.io.IOException {
+            @RequestParam(value = "dependencies", required = false) String dependencies,
+            @RequestParam(value = "image", required = false) MultipartFile image // New parameter for image
+    ) throws IOException {
+        if (image != null && !image.isEmpty()) {
+            String originalFilename = image.getOriginalFilename();
+            long imageSize = image.getSize();
+            byte[] imageBytes = image.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            aiService.sendImage(base64Image);
+        }
         String url = "https://start.spring.io/starter.zip?groupId=" + groupId + "&artifactId=" + artifactId
                 + "&name=" + name + "&description=" + description + "&packageName=" + packageName + "&packaging=" + packaging
                 + "&javaVersion=" + javaVersion + "&type=" + type + "&language=" + language + "&bootVersion=" + bootVersion
-                + "&baseDir=" + baseDir  + "&dependencies=" + dependencies;
+                + "&baseDir=" + baseDir + "&dependencies=" + dependencies;
 
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");

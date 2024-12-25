@@ -1,13 +1,27 @@
-import { useState } from "react";
 import styles from "./PhotoDrop.module.css";
+import { useState } from "react";
 
-function PhotoDrop() {
-  const [image, setImage] = useState(null);
+function PhotoDrop({ setImage }) {
+  const [preview, setPreview] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
-      setImage(URL.createObjectURL(file));
+      const maxSize = 3 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert("File size exceeds 3MB. Please upload a smaller file.");
+        return;
+      }
+
+      const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!validTypes.includes(file.type)) {
+        alert("Invalid file type. Please upload a JPEG or PNG image.");
+        return;
+      }
+
+      setPreview(URL.createObjectURL(file));
+      setImage(file); 
     }
   };
 
@@ -20,9 +34,9 @@ function PhotoDrop() {
         onChange={handleImageChange}
         className={styles.input}
       />
-      {image && (
+      {preview && (
         <div className={styles.preview}>
-          <img src={image} alt="Preview" className={styles.image} />
+          <img src={preview} alt="Preview" className={styles.image} />
         </div>
       )}
     </div>

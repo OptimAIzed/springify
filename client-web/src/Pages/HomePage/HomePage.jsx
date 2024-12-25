@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 function HomePage({ theme }) {
   const { token } = useContext(UserContext);
   const navigate = useNavigate()
-
+  const [image, setImage] = useState(null); 
   const [dependencies, setDependencies] = useState([]);
   const [formData, setFormData] = useState({
     groupId: "com.example",
@@ -29,6 +29,7 @@ function HomePage({ theme }) {
     bootVersion: "3.4.1",
     baseDir: "demo",
     dependencies: "",
+    image: ""
   });
 
   const setField = (key, value) => {
@@ -46,28 +47,45 @@ function HomePage({ theme }) {
     }));
   };
 
+
   const generate = () => {
     const baseUrl = "http://localhost:8888/api/projects/generate";
-    const queryString = new URLSearchParams(formData).toString();
-    const fullUrl = `${baseUrl}?${queryString}${dependencies.join(',')}`;
-
+  
     const token = localStorage.getItem('token');
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    axios.get(fullUrl, { headers, responseType: 'blob' })
+  
+    if (!image) {
+      alert("Please upload a UML class diagram image");
+      return;
+    }
+  
+    const multipartData = new FormData();
+    Object.keys(formData).forEach(key => {
+      multipartData.append(key, formData[key]);
+    });
+  
+    if (dependencies && dependencies.length > 0) {
+      multipartData.append('dependencies', dependencies.join(','));
+    }
+  
+    multipartData.append('image', image);
+  
+    axios.post(baseUrl, multipartData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      responseType: 'blob', 
+    })
       .then(response => {
         const blob = new Blob([response.data], { type: 'application/zip' });
         const downloadUrl = URL.createObjectURL(blob);
-
+  
         const link = document.createElement('a');
         link.href = downloadUrl;
         link.download = `${formData.baseDir}.zip`;
         document.body.appendChild(link);
         link.click();
-
+  
         link.remove();
         URL.revokeObjectURL(downloadUrl);
       })
@@ -75,6 +93,7 @@ function HomePage({ theme }) {
         console.error('Error downloading the zip file:', error);
       });
   };
+  
 
 
   useEffect(() => {
@@ -94,7 +113,7 @@ function HomePage({ theme }) {
           </div>
           <div className={styles.rightColumn}>
             <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
-            <PhotoDrop />
+            <PhotoDrop setImage={setImage} image={image} />
           </div>
         </div>
         <Footer theme={theme} onClick={generate} />

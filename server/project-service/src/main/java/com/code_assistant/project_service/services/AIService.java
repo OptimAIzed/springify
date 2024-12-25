@@ -18,6 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 
 import java.io.IOException;
+import java.security.Key;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 @Service
 public class AIService {
@@ -28,7 +31,58 @@ public class AIService {
     @Value("${gemini_api_key}")
     private String API_KEY ;
     private String conversationHistory = "";
+    public String sendImage(String base64Image) {
+        String payload = String.format(
+                "{" + "\"contents\": [{" +
+                           "\"parts\": [" +
+                             "{\"text\": \"Give entities for this class diagram in java.\"}," +
+                           "{" +
+                       "\"inline_data\": {" +
+                        "\"mime_type\": \"image/jpeg\"," +
+                        "\"data\": \"%s\"" +
+                            "}" +
+                            "}" +
+                            "]" +
+                   "}]" + "}", base64Image);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
+        HttpEntity<String> request = new HttpEntity<>(payload, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = String.format(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=%s",
+                API_KEY
+        );
+        try {
+            JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
+
+            if (response != null) {
+                List<Object> candidates = (List<Object>) response.get("candidates");
+                if (candidates != null && !candidates.isEmpty()) {
+                    LinkedHashMap candidate = (LinkedHashMap) candidates.get(0);
+
+                    LinkedHashMap content = (LinkedHashMap) candidate.get("content");
+                    if (content != null) {
+                        List<Object> parts = (List<Object>) content.get("parts");
+                        if (parts != null && !parts.isEmpty()) {
+                            LinkedHashMap firstPart = (LinkedHashMap) parts.get(0);
+
+                            String text = (String) firstPart.get("text");
+                            System.out.println("Extracted text: " + text);
+                        }
+                    }
+                }
+            }
+
+            return restTemplate.postForObject(url, request, String.class);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+
+        return "No Text";
+    }
     public String chat(String prompt) {
         String fullPrompt = prompt;
 
