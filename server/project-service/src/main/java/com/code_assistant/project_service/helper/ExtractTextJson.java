@@ -32,6 +32,8 @@ public class ExtractTextJson {
     }
 
     public static HashMap<String, List<HashMap<String, String>>> extractCodeFromText(String text) {
+        text = text.replaceAll("```java", "").replaceAll("```", "").trim();
+
         HashMap<String,List<HashMap<String,String>>> output = new HashMap<>();
         output.put("repository",new ArrayList<>());
         output.put("service",new ArrayList<>());
@@ -42,13 +44,12 @@ public class ExtractTextJson {
         boolean flag = false;
         StringBuilder code = new StringBuilder();
         boolean code_activator = false;
-        for(int i=0;i<text.length();i++) {
+        for(int i = 0; i < text.length(); i++) {
             if(text.charAt(i) == '#') {
                 flag = true;
             } else if(text.charAt(i) == '\n' && flag) {
                 flag = false;
                 code_activator = true;
-                System.out.println(fileName);
             } else if(flag) {
                 fileName.append(text.charAt(i));
             }
@@ -57,29 +58,24 @@ public class ExtractTextJson {
                 if(text.charAt(i) == '#') {
                     if(fileName.toString().toLowerCase().contains("repository")) {
                         HashMap<String,String> file_code = new HashMap<>();
-                        file_code.put(fileName.toString(),code.toString());
+                        file_code.put(fileName.toString(), code.toString());
                         output.get("repository").add(file_code);
-                    }
-
-                    else if(fileName.toString().toLowerCase().contains("service")) {
+                    } else if(fileName.toString().toLowerCase().contains("service")) {
                         HashMap<String,String> file_code = new HashMap<>();
-                        file_code.put(fileName.toString(),code.toString());
+                        file_code.put(fileName.toString(), code.toString());
                         output.get("service").add(file_code);
-                    }
-
-                    else if(fileName.toString().toLowerCase().contains("controller")) {
+                    } else if(fileName.toString().toLowerCase().contains("controller")) {
                         HashMap<String,String> file_code = new HashMap<>();
-                        file_code.put(fileName.toString(),code.toString());
+                        file_code.put(fileName.toString(), code.toString());
                         output.get("controller").add(file_code);
-                    }
-
-                    else {
+                    } else {
                         HashMap<String,String> file_code = new HashMap<>();
-                        file_code.put(fileName.toString(),code.toString());
+                        file_code.put(fileName.toString(), code.toString());
                         output.get("model").add(file_code);
                     }
                     code_activator = false;
                     fileName = new StringBuilder();
+                    code = new StringBuilder();
                 } else {
                     code.append(text.charAt(i));
                 }
@@ -87,4 +83,5 @@ public class ExtractTextJson {
         }
         return output;
     }
+
 }
