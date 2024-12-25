@@ -38,9 +38,8 @@ public class SpringInitializerService {
         // 1. Extract ZIP
         extractZip(inputStream, extractedDir);
 
-        // 2. Create and Add the File
-        Path testFile = extractedDir.resolve("testXXX.txt");
-        Files.write(testFile, "This is a test file added to the ZIP".getBytes());
+        // 2. Create and Add the User related files
+        createTableFiles(extractedDir, artifactId, packageName);
 
         // 3. Re-Zip
         byte[] modifiedZipData = createZipFromDirectory(extractedDir);
@@ -51,6 +50,35 @@ public class SpringInitializerService {
         cleanUp(tempDir);
 
         return new ResponseEntity<>(modifiedZipData, headers, HttpStatus.OK);
+    }
+
+    private void createTableFiles(Path extractedDir, String artifactId, String packageName) throws IOException {
+        Path javaSrcDir = extractedDir.resolve(artifactId+"/src/main/java");
+        Path packageDir = javaSrcDir.resolve(packageName.replace(".", "/"));
+
+        // 1. Create model Directory
+        Path modelDir = packageDir.resolve("model");
+        Files.createDirectories(modelDir);
+        String content = "X";
+        Files.write(modelDir.resolve("User.java"), content.getBytes());
+
+        // 2. Create repository Directory
+        Path repositoryDir = packageDir.resolve("repository");
+        Files.createDirectories(repositoryDir);
+        content = "X";
+        Files.write(repositoryDir.resolve("UserRepository.java"), content.getBytes());
+
+        // 3. Create service Directory
+        Path serviceDir = packageDir.resolve("service");
+        Files.createDirectories(serviceDir);
+        content = "X";
+        Files.write(serviceDir.resolve("UserService.java"), content.getBytes());
+
+        // 4. Create controller Directory
+        Path controllerDir = packageDir.resolve("controller");
+        Files.createDirectories(controllerDir);
+        content = "X";
+        Files.write(controllerDir.resolve("UserController.java"), content.getBytes());
     }
 
     private static void cleanUp(Path tempDir) throws IOException {
@@ -110,54 +138,5 @@ public class SpringInitializerService {
                     });
         }
         return byteArrayOutputStream.toByteArray();
-    }
-
-    private static void createZipEntry(ZipOutputStream zos, Path folderPath, String fileName, String fileContent) throws IOException {
-        Path filePath = folderPath.resolve(fileName);
-        ZipEntry zipEntry = new ZipEntry(filePath.toString().replace("\\", "/")); // Use forward slashes
-
-        zos.putNextEntry(zipEntry);
-
-        try (InputStream is = new ByteArrayInputStream(fileContent.getBytes())) {
-            byte[] bytes = new byte[1024];
-            int length;
-            while ((length = is.read(bytes)) >= 0) {
-                zos.write(bytes, 0, length);
-            }
-        }
-
-        zos.closeEntry();
-    }
-
-    private static String createRepositoryContent(){
-        return  "package com.example.demo.repositories;\n" +
-                "\n" +
-                "public class UserRepository {\n" +
-                "    // Repository logic here\n" +
-                "}\n";
-    }
-
-    private static String createControllerContent(){
-        return "package com.example.demo.controllers;\n" +
-                "\n" +
-                "public class UserController {\n" +
-                "    // Controller logic here\n" +
-                "}\n";
-    }
-
-    private static String createEntityContent(){
-        return "package com.example.demo.entities;\n" +
-                "\n" +
-                "public class User {\n" +
-                "    // Entity properties here\n" +
-                "}\n";
-    }
-
-    private static String createServiceContent(){
-        return  "package com.example.demo.services;\n" +
-                "\n" +
-                "public class UserService {\n" +
-                "    // Service logic here\n" +
-                "}\n";
     }
 }
