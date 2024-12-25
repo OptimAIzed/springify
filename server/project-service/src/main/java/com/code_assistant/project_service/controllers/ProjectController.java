@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Base64;
 
 import java.util.List;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -109,14 +110,15 @@ public class ProjectController {
             @RequestParam(value = "dependencies", required = false) String dependencies,
             @RequestParam(value = "image", required = false) MultipartFile image
     ) throws IOException, java.io.IOException {
+        HashMap<String, List<HashMap<String, String>>> content = new HashMap<>();
         if (image != null && !image.isEmpty()) {
             String originalFilename = image.getOriginalFilename();
             long imageSize = image.getSize();
             byte[] imageBytes = image.getBytes();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            aiService.sendImage(base64Image);
+            content = aiService.sendImage(base64Image);
         }
        return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
-               packaging, javaVersion, type, language, bootVersion, baseDir, dependencies);
+               packaging, javaVersion, type, language, bootVersion, baseDir, dependencies, content);
     }
 }

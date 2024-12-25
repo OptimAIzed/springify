@@ -7,14 +7,16 @@ import RadioForm from "../../Components/RadioForm/RadioForm";
 import DependencyPage from '../../Pages/DependencyPage/DependencyPage';
 import PhotoDrop from "../../Components/PhotoDrop/PhotoDrop";
 import ProjectForm from "../../Components/ProjectForm/ProjectForm";
+import Loading from "../../Components/Loading/Loading";
 import { UserContext } from "../../Context/UserContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 function HomePage({ theme }) {
+  const [loading, setLoading] = useState(false);
   const { token } = useContext(UserContext);
   const navigate = useNavigate()
-  const [image, setImage] = useState(null); 
+  const [image, setImage] = useState(null);
   const [dependencies, setDependencies] = useState([]);
   const [formData, setFormData] = useState({
     groupId: "com.example",
@@ -50,50 +52,56 @@ function HomePage({ theme }) {
 
   const generate = () => {
     const baseUrl = "http://localhost:8888/api/projects/generate";
-  
+
     const token = localStorage.getItem('token');
-  
+
     if (!image) {
       alert("Please upload a UML class diagram image");
       return;
     }
-  
+
+    setLoading(true);
+
     const multipartData = new FormData();
     Object.keys(formData).forEach(key => {
-      multipartData.append(key, formData[key]);
+      if (key !== "dependencies" && key !== "image")
+        multipartData.append(key, formData[key]);
     });
-  
+
     if (dependencies && dependencies.length > 0) {
       multipartData.append('dependencies', dependencies.join(','));
     }
-  
+
     multipartData.append('image', image);
-  
+
     axios.post(baseUrl, multipartData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
       },
-      responseType: 'blob', 
+      responseType: 'blob',
     })
       .then(response => {
+
         const blob = new Blob([response.data], { type: 'application/zip' });
         const downloadUrl = URL.createObjectURL(blob);
-  
+
         const link = document.createElement('a');
         link.href = downloadUrl;
         link.download = `${formData.baseDir}.zip`;
         document.body.appendChild(link);
         link.click();
-  
+
         link.remove();
         URL.revokeObjectURL(downloadUrl);
       })
       .catch(error => {
         console.error('Error downloading the zip file:', error);
+      }).finally(() => {
+        setLoading(false);
       });
   };
-  
+
 
 
   useEffect(() => {
@@ -117,6 +125,9 @@ function HomePage({ theme }) {
           </div>
         </div>
         <Footer theme={theme} onClick={generate} />
+        {
+          loading && <Loading />
+        }
       </div>
     ) : (
       <div className={styles.errorMessage}>You must login</div>

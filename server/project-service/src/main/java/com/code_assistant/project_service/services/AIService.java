@@ -20,7 +20,7 @@ import org.springframework.http.*;
 
 import java.io.IOException;
 import java.security.Key;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -32,11 +32,11 @@ public class AIService {
     @Value("${gemini_api_key}")
     private String API_KEY ;
     private String conversationHistory = "";
-    public String sendImage(String base64Image) {
+    public HashMap<String, List<HashMap<String, String>>> sendImage(String base64Image) {
         String payload = String.format(
                 "{" + "\"contents\": [{" +
                            "\"parts\": [" +
-                             "{\"text\": \"Provide the service, repository, entities, and controller for the following class diagram in Java. For each code snippet, include the file name prefixed with '#' (e.g., #Person.java), followed by the code with no enclosed in triple backticks do not include this (```java). Do not include any additional explanation, just the code and file names.\"}," +
+                             "{\"text\": \"Provide the service, repository, entities, and controller for the given class diagram in Java. For each file, start with its name prefixed with '#' (e.g., #Person.java), followed immediately by the corresponding Java code. Do not include any additional explanation or list file names separately. Just the file name and its content.\"}," +
                            "{" +
                        "\"inline_data\": {" +
                         "\"mime_type\": \"image/jpeg\"," +
@@ -58,7 +58,7 @@ public class AIService {
         JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
         String extracted = ExtractTextJson.extract(response);
         System.out.println(ExtractTextJson.extractCodeFromText(extracted));
-        return "No Text";
+        return ExtractTextJson.extractCodeFromText(extracted);
     }
     public String chat(String prompt) {
         String fullPrompt = prompt;
