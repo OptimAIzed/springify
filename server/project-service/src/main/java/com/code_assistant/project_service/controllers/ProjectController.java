@@ -5,12 +5,11 @@ import com.code_assistant.project_service.entities.Project;
 import com.code_assistant.project_service.entities.User;
 import com.code_assistant.project_service.repositories.ProjectRepository;
 import com.code_assistant.project_service.services.AIService;
+import com.code_assistant.project_service.services.SpringInitializerService;
 import com.code_assistant.project_service.services.interfaces.ProjectService;
 import com.code_assistant.project_service.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +23,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
+
 import java.util.List;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -39,6 +38,9 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SpringInitializerService springInitializerService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Project> findById(@PathVariable Long id) {
         try {
@@ -104,8 +106,8 @@ public class ProjectController {
             @RequestParam(value = "bootVersion", defaultValue = "3.4.1") String bootVersion,
             @RequestParam(value = "baseDir", defaultValue = "demo") String baseDir,
             @RequestParam(value = "dependencies", required = false) String dependencies,
-            @RequestParam(value = "image", required = false) MultipartFile image // New parameter for image
-    ) throws IOException {
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) throws IOException, java.io.IOException {
         if (image != null && !image.isEmpty()) {
             String originalFilename = image.getOriginalFilename();
             long imageSize = image.getSize();
@@ -113,19 +115,7 @@ public class ProjectController {
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             aiService.sendImage(base64Image);
         }
-        String url = "https://start.spring.io/starter.zip?groupId=" + groupId + "&artifactId=" + artifactId
-                + "&name=" + name + "&description=" + description + "&packageName=" + packageName + "&packaging=" + packaging
-                + "&javaVersion=" + javaVersion + "&type=" + type + "&language=" + language + "&bootVersion=" + bootVersion
-                + "&baseDir=" + baseDir + "&dependencies=" + dependencies;
-
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestMethod("GET");
-
-        InputStream inputStream = connection.getInputStream();
-        byte[] content = inputStream.readAllBytes();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<>(content, headers, HttpStatus.OK);
+       return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
+               packaging, javaVersion, type, language, bootVersion, baseDir, dependencies);
     }
 }
