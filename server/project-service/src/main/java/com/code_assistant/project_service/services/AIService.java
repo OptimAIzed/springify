@@ -1,5 +1,6 @@
 package com.code_assistant.project_service.services;
 
+import com.code_assistant.project_service.helper.ExtractTextJson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,7 +36,7 @@ public class AIService {
         String payload = String.format(
                 "{" + "\"contents\": [{" +
                            "\"parts\": [" +
-                             "{\"text\": \"Give entities for this class diagram in java.\"}," +
+                             "{\"text\": \"Provide the service, repository, entities, and controller for the following class diagram in Java. For each code snippet, include the file name prefixed with '#' (e.g., #Person.java), followed by the code with no enclosed in triple backticks do not include this (```java). Do not include any additional explanation, just the code and file names.\"}," +
                            "{" +
                        "\"inline_data\": {" +
                         "\"mime_type\": \"image/jpeg\"," +
@@ -54,33 +55,9 @@ public class AIService {
                 "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=%s",
                 API_KEY
         );
-        try {
-            JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
-
-            if (response != null) {
-                List<Object> candidates = (List<Object>) response.get("candidates");
-                if (candidates != null && !candidates.isEmpty()) {
-                    LinkedHashMap candidate = (LinkedHashMap) candidates.get(0);
-
-                    LinkedHashMap content = (LinkedHashMap) candidate.get("content");
-                    if (content != null) {
-                        List<Object> parts = (List<Object>) content.get("parts");
-                        if (parts != null && !parts.isEmpty()) {
-                            LinkedHashMap firstPart = (LinkedHashMap) parts.get(0);
-
-                            String text = (String) firstPart.get("text");
-                            System.out.println("Extracted text: " + text);
-                        }
-                    }
-                }
-            }
-
-            return restTemplate.postForObject(url, request, String.class);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-
-
+        JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
+        String extracted = ExtractTextJson.extract(response);
+        System.out.println(ExtractTextJson.extractCodeFromText(extracted));
         return "No Text";
     }
     public String chat(String prompt) {
