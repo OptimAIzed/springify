@@ -4,7 +4,8 @@ package com.code_assistant.project_service.helper;
 import com.code_assistant.project_service.dto.ProjectDto;
 import com.code_assistant.project_service.entities.Project;
 
-public class ProjectMapper {
+public class
+ProjectMapper {
 	public static ProjectDto map(final Project project) {
 		return ProjectDto.builder()
 				.id(project.getId())
@@ -21,6 +22,7 @@ public class ProjectMapper {
 				.packaging(project.getPackaging())
 				.description(project.getDescription())
 				.type(project.getType())
+				.image(project.getImage())
 				.build();
 	}
 
@@ -39,6 +41,7 @@ public class ProjectMapper {
 				.packaging(projectDto.getPackaging())
 				.type(projectDto.getType())
 				.dependencies(projectDto.getDependencies())
+				.image(projectDto.getImage())
 				.build();
 	}
 }

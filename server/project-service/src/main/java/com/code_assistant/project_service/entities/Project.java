@@ -33,6 +33,8 @@ public class Project {
     private Long userId;
     private String type;
     private String dependencies;
+    @Column(columnDefinition = "BLOB")
+    private byte[] image;
     @CreationTimestamp
     private Timestamp creationDate;
     @UpdateTimestamp

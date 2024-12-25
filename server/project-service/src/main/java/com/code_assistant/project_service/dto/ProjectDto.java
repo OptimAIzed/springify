@@ -26,4 +26,5 @@ public class ProjectDto {
     private Long userId;
     private String type;
     private String dependencies;
+    private byte[] image;
 }
