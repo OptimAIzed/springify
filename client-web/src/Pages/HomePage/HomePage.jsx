@@ -68,7 +68,7 @@ function HomePage({ theme }) {
         multipartData.append(key, formData[key]);
     });
 
-    if (dependencies && dependencies.length > 0) {
+    if (dependencies) {
       multipartData.append('dependencies', dependencies.join(','));
     }
 

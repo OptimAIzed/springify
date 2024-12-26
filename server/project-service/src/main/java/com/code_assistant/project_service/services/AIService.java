@@ -36,7 +36,7 @@ public class AIService {
         String payload = String.format(
                 "{" + "\"contents\": [{" +
                            "\"parts\": [" +
-                             "{\"text\": \"Provide the service, repository, entities, and controller for the given class diagram in Java. For each file, start with its name prefixed with '#' (e.g., #Person.java), followed immediately by the corresponding Java code. Do not include any additional explanation or list file names separately. Just the file name and its content.\"}," +
+                             "{\"text\": \"Provide the services, repositories, entities, and controllers for the given class diagram in Java. For each file, include its name prefixed with # (e.g., #Person.java) followed immediately by the corresponding Java code. Ensure that all four components—services, repositories, entities, and controllers—are included without skipping any. Do not add any extra explanations or list file names separately. Just provide the file name and its content.\"}," +
                            "{" +
                        "\"inline_data\": {" +
                         "\"mime_type\": \"image/jpeg\"," +
