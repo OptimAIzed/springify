@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +56,6 @@ public class AIService {
         );
         JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
         String extracted = ExtractTextJson.extract(response);
-        System.out.println(ExtractTextJson.extractCodeFromText(extracted));
         return ExtractTextJson.extractCodeFromText(extracted);
     }
     public String chat(String prompt) {
@@ -103,7 +101,6 @@ public class AIService {
         JSONArray contentsArray = new JSONArray();
         JSONObject contentsObject = new JSONObject();
         contentsObject.put("role", "user");
-
         JSONArray partsArray = new JSONArray();
         JSONObject partsObject = new JSONObject();
         partsObject.put("text", prompt);
