@@ -32,7 +32,7 @@
     *   IA : Utilisation de l'API Gemini AI pour des fonctionnalités futures.
 
 ## Comment Utiliser Springify UML
-![image](https://github.com/user-attachments/assets/41490430-2bec-4548-8071-66f577b5a28c)
+![image](https://github.com/user-attachments/assets/c6049540-6d01-42e0-a8e6-f34e0239a53e)
 
 1.  **Spécifiez votre projet :**
     *   Sélectionnez le type de projet (Maven ou Gradle).
@@ -67,6 +67,11 @@
 *   **Langage :** Java
 *   **Outils :** Maven ou Gradle
 
+# Video Demonstration
+
+https://github.com/user-attachments/assets/54bf4e55-d679-4231-b092-4c3aaa7b1646
+
+
 ## Contributeurs
 
 Ce projet a été développé avec la contribution de :
@@ -76,11 +81,12 @@ Ce projet a été développé avec la contribution de :
 *   Ouassima ABOUKHAIR
 *   Yousra ELBARRAQ
 *   Chaymae OUKHOUYY
+*   Mohamed LACHGAR ([Researchgate](https://www.researchgate.net/profile/Mohamed-Lachgar))
 
 ---
 
 **Springify UML : Accélérez vos projets Spring Boot avec intelligence !**
 
 
-https://github.com/user-attachments/assets/398d4ef1-1513-4fff-ad26-5fe6ef867718
+
 
