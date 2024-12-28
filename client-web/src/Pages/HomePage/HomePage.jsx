@@ -120,8 +120,8 @@ function HomePage({ theme }) {
             <ProjectForm formData={formData} handleChange={handleChange} setField={setField} />
           </div>
           <div className={styles.rightColumn}>
-            <DependencyPage dependencies={dependencies} setDependencies={setDependencies} />
             <PhotoDrop setImage={setImage} image={image} />
+            <DependencyPage image={image} dependencies={dependencies} setDependencies={setDependencies} />
           </div>
         </div>
         <Footer theme={theme} onClick={generate} />

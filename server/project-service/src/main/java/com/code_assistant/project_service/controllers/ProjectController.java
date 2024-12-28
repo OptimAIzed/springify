@@ -22,11 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -116,9 +112,23 @@ public class ProjectController {
             long imageSize = image.getSize();
             byte[] imageBytes = image.getBytes();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            content = aiService.sendImage(base64Image);
+            content = aiService.sendImage(artifactId, packageName, base64Image);
         }
-       return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
-               packaging, javaVersion, type, language, bootVersion, baseDir, dependencies, content);
+        return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
+                packaging, javaVersion, type, language, bootVersion, baseDir, dependencies, content);
+    }
+
+    @PostMapping(value = "/generate/dependencies", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> generateProjectDependencies(
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) throws IOException, java.io.IOException {
+        if (image != null && !image.isEmpty()) {
+            byte[] imageBytes = image.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            String jsonResponse = aiService.generateDependencies(base64Image);
+
+            return ResponseEntity.ok(jsonResponse);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"No image provided\"}");
     }
 }
