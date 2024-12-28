@@ -32,11 +32,12 @@ public class AIService {
     @Value("${gemini_api_key}")
     private String API_KEY ;
     private String conversationHistory = "";
-    public HashMap<String, List<HashMap<String, String>>> sendImage(String base64Image) {
+
+    public HashMap<String, List<HashMap<String, String>>> sendImage(String artifactId, String packageName, String base64Image) {
         String payload = String.format(
                 "{" + "\"contents\": [{" +
                            "\"parts\": [" +
-                             "{\"text\": \"Provide the services, repositories, entities, and controllers for the given class diagram in Java. For each file, include its name prefixed with # (e.g., #Person.java) followed immediately by the corresponding Java code. Ensure that all four components—services, repositories, entities, and controllers—are included without skipping any. Do not add any extra explanations or list file names separately. Just provide the file name and its content.\"}," +
+                             "{\"text\": \"Provide the fully implemented services, repositories, entities, and controllers for the given class diagram in Java, ensuring that all required methods, including getters and setters, are present. For each file, include its name prefixed with # (e.g., #Person.java) followed immediately by the corresponding Java code. The artifactId is %s and the packageName is %s. Make sure that all four components—services, repositories, entities, and controllers—are fully implemented, with all necessary methods, dependencies, and logic based on the provided class diagram. Do not add any extra explanations or list file names separately; just provide the file name and its content.\"}," +
                            "{" +
                        "\"inline_data\": {" +
                         "\"mime_type\": \"image/jpeg\"," +
@@ -44,7 +45,7 @@ public class AIService {
                             "}" +
                             "}" +
                             "]" +
-                   "}]" + "}", base64Image);
+                   "}]" + "}", artifactId, packageName, base64Image);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -60,6 +61,37 @@ public class AIService {
         System.out.println(ExtractTextJson.extractCodeFromText(extracted));
         return ExtractTextJson.extractCodeFromText(extracted);
     }
+
+    public String generateDependencies(String base64Image) {
+        String payload = String.format(
+                "{" + "\"contents\": [{" +
+                        "\"parts\": [" +
+                        "{\"text\": \"Generate a JSON array of dependencies based on the provided Java class diagram. Each dependency should include the following fields: id, name, description, category, and dependency. The dependency field should use the simplified dependency identifiers recognized by start.spring.io, such as 'web' instead of 'spring-boot-starter-web'. Ensure the dependency field uses the correct identifiers by referencing the list available from Spring Initializr. Provide only the JSON array as the output, without any additional explanations or text.\"}," +
+                        "{" +
+                        "\"inline_data\": {" +
+                        "\"mime_type\": \"image/jpeg\"," +
+                        "\"data\": \"%s\"" +
+                        "}" +
+                        "}" +
+                        "]" +
+                        "}]" + "}", base64Image);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(payload, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = String.format(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=%s",
+                API_KEY
+        );
+        JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
+        String extracted = ExtractTextJson.extract(response);
+        ExtractTextJson.removeTicks(extracted);
+        System.out.println(extracted);
+        return ExtractTextJson.removeTicks(extracted);
+    }
+
     public String chat(String prompt) {
         String fullPrompt = prompt;
 

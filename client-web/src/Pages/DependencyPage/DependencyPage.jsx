@@ -1,42 +1,51 @@
-import React, { useState, useEffect } from "react";
-import Dependencies from "../../Components/Dependencies/Dependencies";
 import styles from "./DependencyPage.module.css";
+import React, { useState } from "react";
+import axios from "axios";
+import { allDependencies } from "../../utils/dependenciesList";
 
-function DependencyPage({ dependencies, setDependencies }) {
+function DependencyPage({ image, setDependencies }) {
   const [selectedDependencies, setSelectedDependencies] = useState([]);
-  const [isDependenciesVisible, setIsDependenciesVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleAddDependency = (dependency) => {
-    if (!selectedDependencies.find((dep) => dep.id === dependency.id)) {
-      setDependencies([...dependencies, dependency.dependency]);
-      setSelectedDependencies([...selectedDependencies, dependency]);
+  const fetchDependencies = async () => {
+    const baseUrl = "http://localhost:8888/api/projects/generate/dependencies";
+    const token = localStorage.getItem('token');
+
+    if (!image) {
+      alert("Please upload a UML class diagram image");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    const multipartData = new FormData();
+    multipartData.append('image', image);
+
+    try {
+      const response = await axios.post(baseUrl, multipartData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        responseType: 'json',
+      });
+      const selectedDependencies = response.data;
+      const filteredDependencies = selectedDependencies.filter(dep =>
+        allDependencies.some(allDep => allDep.dependency === dep.dependency)
+      );
+
+      // Set the filtered dependencies
+      setSelectedDependencies(filteredDependencies);
+      setDependencies(filteredDependencies.map(dep => dep.dependency));
+    } catch (err) {
+      setError(err);
+      console.error('Error fetching dependencies:', err);
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handleDeleteDependency = (id) => {
-    setDependencies(dependencies.filter((dep) => {
-      const dependencyToRemove = selectedDependencies.find((d) => d.id === id);
-      return dep !== dependencyToRemove?.dependency;
-    }));
-    setSelectedDependencies(selectedDependencies.filter((dep) => dep.id !== id));
-  };
-
-  const handleClickOutside = (e) => {
-    if (!e.target.closest(`.${styles.dependenciesContainer}`)) {
-      setIsDependenciesVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isDependenciesVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isDependenciesVisible]);
 
   return (
     <div className={styles.container}>
@@ -44,45 +53,32 @@ function DependencyPage({ dependencies, setDependencies }) {
         <h1 className={styles.title}>Dependencies</h1>
         <button
           className={styles.addButton}
-          onClick={() => setIsDependenciesVisible(true)}
+          onClick={() => fetchDependencies()}
         >
-          ADD DEPENDENCIES...
+          GENERATE DEPENDENCIES
         </button>
       </div>
 
       <div className={styles.divider}></div>
 
       <div className={styles.selectedDependencies}>
-        {selectedDependencies.length === 0 ? (
-          <p className={styles.noDependency}>No dependency selected</p>
-        ) : (
-          <ul className={styles.selectedList}>
-            {selectedDependencies.map((dep) => (
-              <li key={dep.id} className={styles.selectedItem}>
-                <div className={styles.itemContent}>
-                  <strong>{dep.name}</strong>
-                  <span className={styles.category}>{dep.category}</span>
-                  <p>{dep.description}</p>
-                </div>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteDependency(dep.id)}
-                >
-                  ❌
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        {loading ? <p className={styles.noDependency}>Loading dependencies...</p> :
+          selectedDependencies.length === 0 ? (
+            <p className={styles.noDependency}>No dependencies available for this project.</p>
+          ) : (
+            <ul className={styles.selectedList}>
+              {selectedDependencies.map((dep) => (
+                <li key={dep.id} className={styles.selectedItem}>
+                  <div className={styles.itemContent}>
+                    <strong>{dep.name}</strong>
+                    <span className={styles.category}>{dep.category}</span>
+                    <p>{dep.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
       </div>
-
-      {isDependenciesVisible && (
-        <div className={styles.overlay}>
-          <div className={styles.dependenciesContainer}>
-            <Dependencies dependencies={dependencies} onAddDependency={handleAddDependency} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -84,4 +84,8 @@ public class ExtractTextJson {
         return output;
     }
 
+    public static String removeTicks(String text) {
+        text = text.replaceAll("```json", "").replaceAll("```", "").trim();
+        return text;
+    }
 }
