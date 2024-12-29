@@ -49,6 +49,8 @@
     *   Naviguez vers le dossier du projet généré.
     *   Démarrez le projet en utilisant Maven ou Gradle, selon votre configuration choisie.
 
+![image](https://github.com/user-attachments/assets/97a109ac-0ae4-4625-b124-c9e3ae2e68a0)
+
 ## Avantages
 
 *   **Gain de temps :** Éliminez la configuration initiale et concentrez-vous sur la logique métier.
