@@ -9,4 +9,5 @@ public interface ProjectService {
     ProjectDto save(ProjectDto projectDto);
     ProjectDto findProjectById(Long id);
     List<ProjectDto> findByUserId(Long id);
+    void deleteAllProjects(Long userid);
 }

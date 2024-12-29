@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,11 +31,12 @@ public class AIService {
     @Value("${gemini_api_key}")
     private String API_KEY ;
     private String conversationHistory = "";
-    public HashMap<String, List<HashMap<String, String>>> sendImage(String base64Image) {
+
+    public HashMap<String, List<HashMap<String, String>>> sendImage(String artifactId, String packageName, String base64Image) {
         String payload = String.format(
                 "{" + "\"contents\": [{" +
                            "\"parts\": [" +
-                             "{\"text\": \"Provide the service, repository, entities, and controller for the given class diagram in Java. For each file, start with its name prefixed with '#' (e.g., #Person.java), followed immediately by the corresponding Java code. Do not include any additional explanation or list file names separately. Just the file name and its content.\"}," +
+                             "{\"text\": \"Provide the fully implemented services, repositories, entities, and controllers for the given class diagram in Java, ensuring that all required methods, including getters and setters, are present. For each file, include its name prefixed with # (e.g., #Person.java) followed immediately by the corresponding Java code. The artifactId is %s and the packageName is %s. Make sure that all four components—services, repositories, entities, and controllers—are fully implemented, with all necessary methods, dependencies, and logic based on the provided class diagram. Do not add any extra explanations or list file names separately; just provide the file name and its content.\"}," +
                            "{" +
                        "\"inline_data\": {" +
                         "\"mime_type\": \"image/jpeg\"," +
@@ -44,7 +44,7 @@ public class AIService {
                             "}" +
                             "}" +
                             "]" +
-                   "}]" + "}", base64Image);
+                   "}]" + "}", artifactId, packageName, base64Image);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -57,44 +57,36 @@ public class AIService {
         );
         JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
         String extracted = ExtractTextJson.extract(response);
-        System.out.println(ExtractTextJson.extractCodeFromText(extracted));
         return ExtractTextJson.extractCodeFromText(extracted);
     }
-    public String chat(String prompt) {
-        String fullPrompt = prompt;
 
-        if (!Strings.isBlank(conversationHistory)) {
-            fullPrompt = "[Context]" + conversationHistory + " [Content] " + prompt;
-        }
-
+    public String generateDependencies(String base64Image) {
+        String payload = String.format(
+                "{" + "\"contents\": [{" +
+                        "\"parts\": [" +
+                        "{\"text\": \"Generate a JSON array of dependencies based on the provided Java class diagram. Each dependency should include the following fields: id, name, description, category, and dependency. The dependency field should use the simplified dependency identifiers recognized by start.spring.io, such as 'web' instead of 'spring-boot-starter-web'. Ensure the dependency field uses the correct identifiers by referencing the list available from Spring Initializr. Provide only the JSON array as the output, without any additional explanations or text.\"}," +
+                        "{" +
+                        "\"inline_data\": {" +
+                        "\"mime_type\": \"image/jpeg\"," +
+                        "\"data\": \"%s\"" +
+                        "}" +
+                        "}" +
+                        "]" +
+                        "}]" + "}", base64Image);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        fullPrompt = getPromptBody(fullPrompt);
-        HttpEntity<String> requestEntity = new HttpEntity<>(fullPrompt, headers);
+        HttpEntity<String> request = new HttpEntity<>(payload, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
-                "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + API_KEY,
-                HttpMethod.POST,
-                requestEntity,
-                String.class
+        String url = String.format(
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=%s",
+                API_KEY
         );
-
-        HttpStatus statusCode = (HttpStatus) responseEntity.getStatusCode();
-
-        if (statusCode == HttpStatus.OK) {
-            String responseText = responseEntity.getBody();
-            try {
-                responseText = parseGeminiResponse(responseText);
-                conversationHistory += prompt + "\n" + responseText + "\n";
-            } catch (Exception e) {
-                logger.error("Error parsing response", e);
-            }
-            return responseText;
-        } else {
-            throw new RuntimeException("API request failed with status code: " + statusCode + " and response: " + responseEntity.getBody());
-        }
+        JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
+        String extracted = ExtractTextJson.extract(response);
+        ExtractTextJson.removeTicks(extracted);
+        return ExtractTextJson.removeTicks(extracted);
     }
 
     public String getPromptBody(String prompt) {
@@ -103,7 +95,6 @@ public class AIService {
         JSONArray contentsArray = new JSONArray();
         JSONObject contentsObject = new JSONObject();
         contentsObject.put("role", "user");
-
         JSONArray partsArray = new JSONArray();
         JSONObject partsObject = new JSONObject();
         partsObject.put("text", prompt);

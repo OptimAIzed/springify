@@ -3,6 +3,7 @@ package com.code_assistant.project_service.controllers;
 import com.code_assistant.project_service.dto.ProjectDto;
 import com.code_assistant.project_service.entities.Project;
 import com.code_assistant.project_service.entities.User;
+import com.code_assistant.project_service.helper.ProjectMapper;
 import com.code_assistant.project_service.repositories.ProjectRepository;
 import com.code_assistant.project_service.services.AIService;
 import com.code_assistant.project_service.services.SpringInitializerService;
@@ -22,11 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-
-import java.util.List;
-import java.util.HashMap;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -60,21 +57,6 @@ public class ProjectController {
         }
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Project>> findAll() {
-        try {
-            List<Project> projects = projectRepository.findAll();
-            return ResponseEntity.ok(projects);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
-    }
-    @PostMapping("gemini")
-    public String communicateWithAi(@RequestBody String userInput) {
-
-        return aiService.chat(userInput);
-    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Project>> findByUser(@PathVariable Long id) {
         try {
@@ -108,17 +90,54 @@ public class ProjectController {
             @RequestParam(value = "bootVersion", defaultValue = "3.4.1") String bootVersion,
             @RequestParam(value = "baseDir", defaultValue = "demo") String baseDir,
             @RequestParam(value = "dependencies", required = false) String dependencies,
-            @RequestParam(value = "image", required = false) MultipartFile image
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam(value = "userId",required = false) Long userId
     ) throws IOException, java.io.IOException {
         HashMap<String, List<HashMap<String, String>>> content = new HashMap<>();
+        byte[] imageBytes = null;
         if (image != null && !image.isEmpty()) {
-            String originalFilename = image.getOriginalFilename();
-            long imageSize = image.getSize();
+            imageBytes = image.getBytes();
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            content = aiService.sendImage(artifactId, packageName, base64Image);
+        }
+        // Creating the project :
+        ProjectDto project = new ProjectDto();
+        project.setImage(imageBytes);
+        project.setName(name);
+        project.setGroupId(groupId);
+        project.setArtifactId(artifactId);
+        project.setBaseDir(baseDir);
+        project.setUserId(userId);
+        project.setBootVersion(bootVersion);
+        project.setJavaVersion(javaVersion);
+        project.setLanguage(language);
+        project.setDependencies(dependencies);
+        project.setDescription(description);
+        project.setPackageName(packageName);
+        project.setPackaging(packaging);
+        // Save
+        projectService.save(project);
+        return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
+                packaging, javaVersion, type, language, bootVersion, baseDir, dependencies, content);
+    }
+
+    @PostMapping(value = "/generate/dependencies", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> generateProjectDependencies(
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) throws IOException, java.io.IOException {
+        if (image != null && !image.isEmpty()) {
             byte[] imageBytes = image.getBytes();
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-            content = aiService.sendImage(base64Image);
+            String jsonResponse = aiService.generateDependencies(base64Image);
+
+            return ResponseEntity.ok(jsonResponse);
         }
-       return  springInitializerService.downloadAndModifyZip(groupId, artifactId, name, description, packageName,
-               packaging, javaVersion, type, language, bootVersion, baseDir, dependencies, content);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"No image provided\"}");
     }
+    @DeleteMapping(value = "/deleteAll/{userid}")
+    public ResponseEntity<Void> deleteAll(@PathVariable Long userid) {
+        projectService.deleteAllProjects(userid);
+        return ResponseEntity.noContent().build();
+    }
+
 }

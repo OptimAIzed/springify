@@ -143,12 +143,8 @@ public class HomePageTest {
 
     @Test
     public void testDependencyButton() {
-        WebElement dependencyButton = driver.findElement(By.xpath("//button[text()='ADD DEPENDENCIES...']"));
+        WebElement dependencyButton = driver.findElement(By.xpath("//button[text()='GENERATE DEPENDENCIES']"));
         assertTrue(dependencyButton.isDisplayed(), "Dependency button should be displayed");
-        dependencyButton.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
-        WebElement overlay = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("_overlay_bhwvw_179")));
-        assertTrue(overlay.isDisplayed(), "Modal should be displayed");
     }
 
     @Test

@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class SpringInitializerService {
                 + "&name=" + name + "&description=" + description + "&packageName=" + packageName + "&packaging=" + packaging
                 + "&javaVersion=" + javaVersion + "&type=" + type + "&language=" + language + "&bootVersion=" + bootVersion
                 + "&baseDir=" + baseDir  + "&dependencies=" + dependencies;
-
+        System.out.println("this is the content : " + content);
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");
 
@@ -38,7 +39,6 @@ public class SpringInitializerService {
         Path tempDir = Files.createTempDirectory("modified-zip");
         Path extractedDir = tempDir.resolve("extracted");
         Files.createDirectories(extractedDir);
-
         // 1. Extract ZIP
         extractZip(inputStream, extractedDir);
 
@@ -51,7 +51,7 @@ public class SpringInitializerService {
         if (modelFiles != null) {
             for (HashMap<String, String> fileMap : modelFiles) {
                 for (Map.Entry<String, String> fileEntry : fileMap.entrySet()){
-                    String fileName = fileEntry.getKey();
+                    String fileName = extractFileName(fileEntry.getKey());
                     String fileContent = fileEntry.getValue();
                     createModelFiles(packageDir, fileName, fileContent);
                 }
@@ -62,7 +62,7 @@ public class SpringInitializerService {
         if (repositoryFiles != null) {
             for (HashMap<String, String> fileMap : repositoryFiles) {
                 for (Map.Entry<String, String> fileEntry : fileMap.entrySet()){
-                    String fileName = fileEntry.getKey();
+                    String fileName = extractFileName(fileEntry.getKey());
                     String fileContent = fileEntry.getValue();
                     createRepositoryFiles(packageDir, fileName, fileContent);
                 }
@@ -73,7 +73,7 @@ public class SpringInitializerService {
         if (serviceFiles != null) {
             for (HashMap<String, String> fileMap : serviceFiles) {
                 for (Map.Entry<String, String> fileEntry : fileMap.entrySet()){
-                    String fileName = fileEntry.getKey();
+                    String fileName = extractFileName(fileEntry.getKey());
                     String fileContent = fileEntry.getValue();
                     createServiceFiles(packageDir, fileName, fileContent);
                 }
@@ -84,7 +84,7 @@ public class SpringInitializerService {
         if (controllerFiles != null) {
             for (HashMap<String, String> fileMap : controllerFiles) {
                 for (Map.Entry<String, String> fileEntry : fileMap.entrySet()){
-                    String fileName = fileEntry.getKey();
+                    String fileName = extractFileName(fileEntry.getKey());
                     String fileContent = fileEntry.getValue();
                     createControllerFiles(packageDir, fileName, fileContent);
                 }
@@ -126,33 +126,25 @@ public class SpringInitializerService {
         Files.write(controllerDir.resolve(filename), content.getBytes());
     }
 
-    private void createTableFiles(Path extractedDir, String artifactId, String packageName) throws IOException {
-        Path javaSrcDir = extractedDir.resolve(artifactId+"/src/main/java");
-        Path packageDir = javaSrcDir.resolve(packageName.replace(".", "/"));
+    public static String extractFileName(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
 
-        // 1. Create model Directory
-        Path modelDir = packageDir.resolve("model");
-        Files.createDirectories(modelDir);
-        String content = "X";
-        Files.write(modelDir.resolve("User.java"), content.getBytes());
+        Path path = Paths.get(filePath);
+        Path fileNamePath = path.getFileName();
 
-        // 2. Create repository Directory
-        Path repositoryDir = packageDir.resolve("repository");
-        Files.createDirectories(repositoryDir);
-        content = "X";
-        Files.write(repositoryDir.resolve("UserRepository.java"), content.getBytes());
+        int lastDotIndex = filePath.lastIndexOf('.');
+        int secondToLastDotIndex = filePath.lastIndexOf('.', lastDotIndex - 1);
 
-        // 3. Create service Directory
-        Path serviceDir = packageDir.resolve("service");
-        Files.createDirectories(serviceDir);
-        content = "X";
-        Files.write(serviceDir.resolve("UserService.java"), content.getBytes());
-
-        // 4. Create controller Directory
-        Path controllerDir = packageDir.resolve("controller");
-        Files.createDirectories(controllerDir);
-        content = "X";
-        Files.write(controllerDir.resolve("UserController.java"), content.getBytes());
+        if (secondToLastDotIndex != -1)
+        {
+            return filePath.substring(secondToLastDotIndex + 1);
+        }
+        if (fileNamePath != null) {
+            return fileNamePath.toString();
+        }
+        return null;
     }
 
     private static void cleanUp(Path tempDir) throws IOException {
