@@ -25,6 +25,7 @@ const AuthPage = () => {
             localStorage.setItem('token', response.access_token);
 
             const userInfo = {
+                id: response.user_info.id,
                 firstname: response.user_info.firstname,
                 lastname: response.user_info.lastname,
             };

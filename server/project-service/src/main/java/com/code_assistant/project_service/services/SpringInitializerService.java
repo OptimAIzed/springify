@@ -30,7 +30,7 @@ public class SpringInitializerService {
                 + "&name=" + name + "&description=" + description + "&packageName=" + packageName + "&packaging=" + packaging
                 + "&javaVersion=" + javaVersion + "&type=" + type + "&language=" + language + "&bootVersion=" + bootVersion
                 + "&baseDir=" + baseDir  + "&dependencies=" + dependencies;
-
+        System.out.println("this is the content : " + content);
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");
 
@@ -39,7 +39,6 @@ public class SpringInitializerService {
         Path tempDir = Files.createTempDirectory("modified-zip");
         Path extractedDir = tempDir.resolve("extracted");
         Files.createDirectories(extractedDir);
-
         // 1. Extract ZIP
         extractZip(inputStream, extractedDir);
 

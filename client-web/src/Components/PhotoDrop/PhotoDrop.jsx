@@ -8,9 +8,9 @@ function PhotoDrop({ setImage }) {
     const file = event.target.files[0];
 
     if (file) {
-      const maxSize = 3 * 1024 * 1024;
+      const maxSize = 64 * 1024; // 64KB
       if (file.size > maxSize) {
-        alert("File size exceeds 3MB. Please upload a smaller file.");
+        alert("File size exceeds 64KB. Please upload a smaller file.");
         return;
       }
 
@@ -21,7 +21,7 @@ function PhotoDrop({ setImage }) {
       }
 
       setPreview(URL.createObjectURL(file));
-      setImage(file); 
+      setImage(file);
     }
   };
 

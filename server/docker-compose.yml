@@ -36,24 +36,13 @@ services:
     networks:
       - springify-net
 
-  # Jenkins
-  jenkins:
-    image: jenkins/jenkins:latest
-    container_name: jenkins
-    ports:
-      - "8080:8080"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-    restart: always
-    networks:
-      - springify-net
+
 
 
 networks:
   springify-net:
 
 volumes:
-  jenkins_home:
   sonarqube_database_data:
   sonarqube_conf:
   sonarqube_data:

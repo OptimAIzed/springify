@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 		return AuthenticationResponse.builder()
 				.accessToken(jwtToken)
 				.refreshToken(refreshToken)
-				.userDto(userDto)
+				.userDto(UserMapper.map(savedUser))
 				.build();
 	}
 

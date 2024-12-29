@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,7 +57,6 @@ public class AIService {
         );
         JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
         String extracted = ExtractTextJson.extract(response);
-        System.out.println(ExtractTextJson.extractCodeFromText(extracted));
         return ExtractTextJson.extractCodeFromText(extracted);
     }
 
@@ -88,45 +86,7 @@ public class AIService {
         JSONObject response = restTemplate.postForObject(url, request, JSONObject.class);
         String extracted = ExtractTextJson.extract(response);
         ExtractTextJson.removeTicks(extracted);
-        System.out.println(extracted);
         return ExtractTextJson.removeTicks(extracted);
-    }
-
-    public String chat(String prompt) {
-        String fullPrompt = prompt;
-
-        if (!Strings.isBlank(conversationHistory)) {
-            fullPrompt = "[Context]" + conversationHistory + " [Content] " + prompt;
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        fullPrompt = getPromptBody(fullPrompt);
-        HttpEntity<String> requestEntity = new HttpEntity<>(fullPrompt, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
-                "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + API_KEY,
-                HttpMethod.POST,
-                requestEntity,
-                String.class
-        );
-
-        HttpStatus statusCode = (HttpStatus) responseEntity.getStatusCode();
-
-        if (statusCode == HttpStatus.OK) {
-            String responseText = responseEntity.getBody();
-            try {
-                responseText = parseGeminiResponse(responseText);
-                conversationHistory += prompt + "\n" + responseText + "\n";
-            } catch (Exception e) {
-                logger.error("Error parsing response", e);
-            }
-            return responseText;
-        } else {
-            throw new RuntimeException("API request failed with status code: " + statusCode + " and response: " + responseEntity.getBody());
-        }
     }
 
     public String getPromptBody(String prompt) {
@@ -135,7 +95,6 @@ public class AIService {
         JSONArray contentsArray = new JSONArray();
         JSONObject contentsObject = new JSONObject();
         contentsObject.put("role", "user");
-
         JSONArray partsArray = new JSONArray();
         JSONObject partsObject = new JSONObject();
         partsObject.put("text", prompt);

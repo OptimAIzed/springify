@@ -23,6 +23,7 @@ ProjectMapper {
 				.description(project.getDescription())
 				.type(project.getType())
 				.image(project.getImage())
+				.userId(project.getUserId())
 				.build();
 	}
 
@@ -42,6 +43,7 @@ ProjectMapper {
 				.type(projectDto.getType())
 				.dependencies(projectDto.getDependencies())
 				.image(projectDto.getImage())
+				.userId(projectDto.getUserId())
 				.build();
 	}
 }

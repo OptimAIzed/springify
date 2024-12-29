@@ -31,7 +31,8 @@ function HomePage({ theme }) {
     bootVersion: "3.4.1",
     baseDir: "demo",
     dependencies: "",
-    image: ""
+    image: "",
+    userId: localStorage.getItem('user_info') ? JSON.parse(localStorage.getItem('user_info')).id : null,
   });
 
   const setField = (key, value) => {
@@ -54,7 +55,7 @@ function HomePage({ theme }) {
     const baseUrl = "http://localhost:8888/api/projects/generate";
 
     const token = localStorage.getItem('token');
-
+    console.log(formData)
     if (!image) {
       alert("Please upload a UML class diagram image");
       return;
@@ -67,7 +68,7 @@ function HomePage({ theme }) {
       if (key !== "dependencies" && key !== "image")
         multipartData.append(key, formData[key]);
     });
-
+    console.log(dependencies);
     if (dependencies) {
       multipartData.append('dependencies', dependencies.join(','));
     }
