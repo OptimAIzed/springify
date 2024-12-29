@@ -16,7 +16,6 @@ public class FeignConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             String token = getAuthTokenFromRequest();
-            System.out.println("this is the token : " + token);
             if (token != null) {
                 requestTemplate.header("Authorization", token);
             }
