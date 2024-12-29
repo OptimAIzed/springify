@@ -77,5 +77,13 @@ class ProjectServiceTest {
         assertEquals("Demo Project", savedProjectDto.getDescription());
         assertEquals("Demo Group", savedProjectDto.getGroupId());
     }
+    @Test
+    void testDeleteAllProjects() {
+        doNothing().when(projectRepository).deleteAllByUserId(1L);
+
+        projectService.deleteAllProjects(1L);
+
+        verify(projectRepository, times(1)).deleteAllByUserId(1L);
+    }
 
 }

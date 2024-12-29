@@ -57,21 +57,6 @@ public class ProjectController {
         }
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<List<Project>> findAll() {
-        try {
-            List<Project> projects = projectRepository.findAll();
-            return ResponseEntity.ok(projects);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
-    }
-    @PostMapping("gemini")
-    public String communicateWithAi(@RequestBody String userInput) {
-
-        return aiService.chat(userInput);
-    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Project>> findByUser(@PathVariable Long id) {
         try {
@@ -115,7 +100,6 @@ public class ProjectController {
             String base64Image = Base64.getEncoder().encodeToString(imageBytes);
             content = aiService.sendImage(artifactId, packageName, base64Image);
         }
-        System.out.println(dependencies);
         // Creating the project :
         ProjectDto project = new ProjectDto();
         project.setImage(imageBytes);

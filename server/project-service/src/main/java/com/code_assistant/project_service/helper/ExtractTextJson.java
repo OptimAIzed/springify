@@ -2,6 +2,7 @@ package com.code_assistant.project_service.helper;
 
 import org.json.simple.JSONObject;
 
+import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -55,7 +56,7 @@ public class ExtractTextJson {
             }
 
             if(code_activator) {
-                if(text.charAt(i) == '#') {
+                if(text.charAt(i) == '#' || i == text.length()-1) {
                     if(fileName.toString().toLowerCase().contains("repository")) {
                         HashMap<String,String> file_code = new HashMap<>();
                         file_code.put(fileName.toString(), code.toString());
